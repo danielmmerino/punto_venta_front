@@ -1,4 +1,5 @@
 import 'user.dart';
+import 'local.dart';
 
 abstract class AuthState {
   const AuthState();
@@ -13,9 +14,15 @@ class Authenticating extends AuthState {
 }
 
 class Authenticated extends AuthState {
-  const Authenticated({required this.user, required this.expiresAt});
+  const Authenticated({
+    required this.user,
+    required this.expiresAt,
+    this.locales = const [],
+  });
+
   final User user;
   final DateTime expiresAt;
+  final List<Local> locales;
 }
 
 class Expired extends AuthState {

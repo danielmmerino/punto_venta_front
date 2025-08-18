@@ -2,6 +2,46 @@
 
 Fase 0 del frontend en Flutter con arquitectura base, theming dinámico y guardado seguro de sesión.
 
+## Frontend / Pantalla: Login
+
+Pantalla responsive (móvil y web) que permite iniciar sesión con email y contraseña.
+
+### Flujo
+
+1. El usuario ingresa sus credenciales y envía el formulario.
+2. `POST /v1/auth/login` devuelve `token`, expiración (`exp` o `expires_in`), `user` y `locales`.
+3. Se guarda el JWT en `flutter_secure_storage` junto con su TTL.
+4. Se verifica la suscripción con `GET /v1/estado-suscripcion`.
+5. Navegación:
+   - Múltiples locales → `/selector-local`.
+   - Único local → `/dashboard`.
+6. Errores 401 muestran mensaje *"Credenciales inválidas"*.
+
+### Configuración
+
+El `BASE_URL` se configura con `--dart-define`:
+
+```bash
+flutter run --dart-define=BASE_URL=https://api.staging.tuapp.com -d chrome
+```
+
+El JWT se almacena en `flutter_secure_storage` y su expiración se calcula a partir de `exp`, `expires_in` o del claim dentro del propio JWT.
+
+### Pruebas
+
+```bash
+flutter test
+```
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| POST | `/v1/auth/login` | Inicio de sesión |
+| GET | `/v1/estado-suscripcion` | Verificación de suscripción |
+| GET | `/v1/tenancy/context` | Contexto de locales (opcional) |
+
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).
@@ -34,7 +74,7 @@ flutter run --dart-define=BASE_URL=https://api.staging.tuapp.com -d chrome
 
 El router redirige las rutas protegidas según el estado:
 
-1. **Sin JWT o expirado** → `/auth/blocked`.
+1. **Sin JWT o expirado** → `/login`.
 2. **JWT válido pero suscripción inválida** → `/subscription/blocked`.
 3. **JWT válido y suscripción activa** → acceso permitido.
 
@@ -61,7 +101,8 @@ flutter run --dart-define=BASE_URL=https://api.staging.tuapp.com -d chrome
 Los tests cubren:
 
 - Manejo de token y expiración en `AuthRepository`.
-- Render básico de páginas placeholder.
+- Controlador y UI de login.
+- Render de páginas placeholder.
 
 Ejecutar:
 
