@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/app_spacing.dart';
 
-class AuthBlockedPage extends StatelessWidget {
-  const AuthBlockedPage({super.key});
+class SelectorLocalPage extends StatelessWidget {
+  const SelectorLocalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class AuthBlockedPage extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(spacing.lg),
-          child: const Text('Autenticación requerida'),
+          child: const Text('Selector de Local'),
         ),
       ),
     );

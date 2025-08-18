@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/env/env.dart';
 import 'auth_state.dart';
 import 'user.dart';
+import 'local.dart';
 
 abstract class SecureStorage {
   Future<void> write({required String key, String? value});
@@ -36,6 +39,13 @@ final authStateProvider =
   return AuthNotifier(ref.read(authRepositoryProvider));
 });
 
+class LoginResponse {
+  LoginResponse({required this.user, required this.locales});
+
+  final User user;
+  final List<Local> locales;
+}
+
 class AuthRepository {
   AuthRepository(this._dio, this._storage);
 
@@ -44,16 +54,43 @@ class AuthRepository {
   static const _tokenKey = 'token';
   static const _expiresKey = 'expires_at';
 
-  Future<User> login(String email, String password) async {
+  Future<LoginResponse> login(String email, String password) async {
     final resp = await _dio.post('/v1/auth/login',
         data: {'email': email, 'password': password});
     final token = resp.data['token'] as String;
-    final expiresIn = resp.data['expires_in'] as int;
-    final user = User.fromJson(Map<String, dynamic>.from(resp.data['user']));
-    final expiresAt = DateTime.now().add(Duration(seconds: expiresIn));
     await _storage.write(key: _tokenKey, value: token);
-    await _storage.write(key: _expiresKey, value: expiresAt.toIso8601String());
-    return user;
+
+    DateTime expiresAt;
+    final exp = resp.data['exp'] as int?;
+    final expiresIn = resp.data['expires_in'] as int?;
+    if (exp != null) {
+      expiresAt = DateTime.fromMillisecondsSinceEpoch(exp * 1000);
+    } else if (expiresIn != null) {
+      expiresAt = DateTime.now().add(Duration(seconds: expiresIn));
+    } else {
+      final parts = token.split('.');
+      if (parts.length >= 2) {
+        final payload = jsonDecode(utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
+        final claimExp = payload['exp'] as int?;
+        if (claimExp != null) {
+          expiresAt =
+              DateTime.fromMillisecondsSinceEpoch(claimExp * 1000);
+        } else {
+          expiresAt = DateTime.now().add(const Duration(hours: 24));
+        }
+      } else {
+        expiresAt = DateTime.now().add(const Duration(hours: 24));
+      }
+    }
+    await _storage.write(
+        key: _expiresKey, value: expiresAt.toIso8601String());
+
+    final user = User.fromJson(Map<String, dynamic>.from(resp.data['user']));
+    final locales = (resp.data['locales'] as List?)
+            ?.map((e) => Local.fromJson(Map<String, dynamic>.from(e)))
+            .toList() ??
+        [];
+    return LoginResponse(user: user, locales: locales);
   }
 
   Future<void> refresh() async {
@@ -106,11 +143,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  Future<void> login(String email, String password) async {
+  Future<LoginResponse> login(String email, String password) async {
     state = const Authenticating();
-    final user = await _repo.login(email, password);
+    final resp = await _repo.login(email, password);
     final exp = await _repo.getExpiresAt();
-    state = Authenticated(user: user, expiresAt: exp!);
+    state = Authenticated(
+      user: resp.user,
+      expiresAt: exp!,
+      locales: resp.locales,
+    );
+    return resp;
   }
 
   Future<void> logout() async {
