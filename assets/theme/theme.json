@@ -1,0 +1,44 @@
+{
+  "brand": {
+    "primary": "#6750A4",
+    "secondary": "#625B71",
+    "tertiary": "#7D5260"
+  },
+  "neutrals": {
+    "n0": "#FFFFFF",
+    "n100": "#F5F5F5",
+    "n200": "#EEEEEE",
+    "n300": "#E0E0E0",
+    "n400": "#BDBDBD",
+    "n500": "#9E9E9E",
+    "n600": "#757575",
+    "n700": "#616161",
+    "n800": "#424242",
+    "n900": "#212121"
+  },
+  "semantic": {
+    "success": "#4CAF50",
+    "warning": "#FFC107",
+    "error": "#F44336",
+    "info": "#2196F3"
+  },
+  "surfaces": {
+    "surfaceAlt": "#121212",
+    "overlay": "#00000033",
+    "divider": "#E0E0E0"
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "xxl": 32
+  },
+  "radius": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "pill": 999
+  }
+}
