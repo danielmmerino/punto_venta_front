@@ -494,6 +494,36 @@ Flujo de anulación de factura que genera una Nota de Crédito electrónica.
 
 Las descargas de PDF/XML de la NC se habilitarán cuando el backend exponga `/v1/notas-credito/{id}/pdf` y `/v1/notas-credito/{id}/xml`.
 
+## Frontend / Bodegas y Stock
+
+Pantalla con pestañas **Bodegas** y **Stock** dentro del módulo Inventario.
+
+### Bodegas
+
+- Lista o tabla responsive que muestra Código, Nombre, Zona y estado Activa.
+- Permite crear, editar y eliminar bodegas del local actual mediante un formulario con
+  Código*, Nombre*, Zona (opcional) y Activo.
+- Valida campos requeridos y muestra mensajes de 422 (`already_taken`).
+
+### Stock
+
+- Filtros: bodega (dropdown), buscador de producto con autocomplete y opción *Solo con stock > 0*.
+- Muestra Código, Nombre, U.M., Stock actual, Reservado y Disponible.
+- Advierte si el reservado supera al stock.
+
+La interfaz es responsive para móvil y web y todos los colores, espaciados y radios provienen de `ThemeExtension` (`AppColors`, `AppSpacing`, `AppRadius`).
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/bodegas` | Listar bodegas del local |
+| POST | `/v1/bodegas` | Crear bodega |
+| PUT | `/v1/bodegas/{id}` | Editar bodega |
+| DELETE | `/v1/bodegas/{id}` | Eliminar bodega |
+| GET | `/v1/stock?bodega_id=&producto_id=` | Consultar stock |
+| GET | `/v1/productos?search=&activo=true` | Autocompletar producto |
+
 ## Guard Global
 
 El router redirige las rutas protegidas según el estado:
