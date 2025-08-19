@@ -33,8 +33,21 @@ class FakeDashboardRepository implements DashboardRepository {
       const SubscriptionInfo(estado: 'active');
 }
 
-class FakeContextController extends StateNotifier<ContextState> {
-  FakeContextController() : super(const ContextState(localId: 1));
+class FakeContextController extends ContextController {
+  FakeContextController(Ref ref) : super(ref) {
+    state = const ContextState(localId: 1);
+  }
+
+  @override
+  Future<void> loadContext() async {}
+
+  @override
+  Future<void> selectLocal(int localId) async {}
+
+  @override
+  void setHeaderXLocalId(int? localId) {
+    state = state.copyWith(localId: localId);
+  }
 }
 
 void main() {
@@ -42,7 +55,7 @@ void main() {
     await tester.pumpWidget(ProviderScope(
       overrides: [
         dashboardRepositoryProvider.overrideWithValue(FakeDashboardRepository()),
-        contextControllerProvider.overrideWith((ref) => FakeContextController()),
+        contextControllerProvider.overrideWith((ref) => FakeContextController(ref)),
       ],
       child: const MaterialApp(home: DashboardPage()),
     ));
