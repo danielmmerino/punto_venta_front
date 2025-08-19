@@ -64,4 +64,6 @@
     ,{"method":"PUT","path":"/v1/bodegas/{id}","name":"Editar bodega","module":"inventario","permission":"bodegas.editar"}
     ,{"method":"DELETE","path":"/v1/bodegas/{id}","name":"Eliminar bodega","module":"inventario","permission":"bodegas.eliminar"}
     ,{"method":"GET","path":"/v1/stock","name":"Consultar stock","module":"inventario","permission":"inventario.stock.ver"}
+    ,{"method":"POST","path":"/v1/inventario/ajuste","name":"Crear ajuste de inventario","module":"inventario","permission":"inventario.ajustes.crear"}
+    ,{"method":"POST","path":"/v1/inventario/traspaso","name":"Crear traspaso entre bodegas","module":"inventario","permission":"inventario.traspasos.crear"}
 ]
