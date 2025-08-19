@@ -16,7 +16,7 @@ class FakeContextRepository extends Mock implements ContextRepository {}
 
 class FakeGoRouter extends Mock implements GoRouter {}
 
-class TestAdapter extends HttpClientAdapter {
+class TestAdapter implements HttpClientAdapter {
   RequestOptions? options;
   @override
   void close({bool force = false}) {}
@@ -25,7 +25,7 @@ class TestAdapter extends HttpClientAdapter {
   Future<ResponseBody> fetch(RequestOptions options, Stream<List<int>>? requestStream,
       Future? cancelFuture) async {
     this.options = options;
-    return ResponseBody.fromString('', 200, headers: {}, statusCode: 200);
+    return ResponseBody.fromString('', 200, headers: {});
   }
 }
 
