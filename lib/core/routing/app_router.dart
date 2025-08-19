@@ -8,7 +8,7 @@ import '../../data/auth/auth_state.dart';
 import '../../data/subscription/subscription_repository.dart';
 import '../../features/_placeholders_/subscription_blocked_page.dart';
 import '../../features/auth/ui/login_page.dart';
-import '../../features/_placeholders_/dashboard_page.dart';
+import '../../features/dashboard/ui/dashboard_page.dart';
 import '../../features/_placeholders_/selector_local_page.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {

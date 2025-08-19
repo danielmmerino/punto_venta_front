@@ -70,6 +70,33 @@ columnas en pantallas anchas.
 | GET | `/v1/estado-suscripcion?local_id=…` | Valida suscripción para el local |
 
 
+## Frontend / Dashboard
+
+Pantalla principal post-login que muestra KPIs y alertas del día.
+
+### KPIs
+
+- **Ventas del día** y **ticket promedio** calculados desde `GET /v1/reportes/ventas-dia`.
+- **Top 5 productos** del día a partir de `GET /v1/reportes/productos-mas-vendidos`.
+
+### Alertas
+
+- **Caja no abierta** cuando `GET /v1/caja/estado` (o fallback de aperturas) indica que no hay caja activa.
+- **Suscripción por vencer** si `trial_ends_at` o `next_renewal_at` ocurre en ≤ 7 días.
+
+Todas las fechas se calculan con zona horaria `America/Guayaquil` para cortes diarios.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/reportes/ventas-dia` | Ventas del día por hora |
+| GET | `/v1/reportes/productos-mas-vendidos` | Top de productos del día |
+| GET | `/v1/estado-suscripcion` | Estado de suscripción para alertas |
+| GET | `/v1/caja/estado` | Estado de la caja del local actual |
+
+La interfaz es responsive y utiliza los mismos componentes en móvil y web.
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).
