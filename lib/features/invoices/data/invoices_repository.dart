@@ -25,13 +25,21 @@ class InvoicesRepository {
     Options? options,
     data,
   }) async {
+    final requestOptions = options ?? Options();
+    requestOptions.method = method;
     try {
-      return await _dio.request(primary,
-          data: data, options: options, method: method);
+      return await _dio.request(
+        primary,
+        data: data,
+        options: requestOptions,
+      );
     } on DioException catch (e) {
       if (e.response?.statusCode == 404) {
-        return await _dio.request(fallback,
-            data: data, options: options, method: method);
+        return await _dio.request(
+          fallback,
+          data: data,
+          options: requestOptions,
+        );
       }
       rethrow;
     }
