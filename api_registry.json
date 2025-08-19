@@ -16,7 +16,7 @@
   {
     "method": "GET",
     "path": "/v1/estado-suscripcion",
-    "name": "Estado de suscripci\u00f3n (por empresa/local)",
+    "name": "Estado de suscripción (por empresa/local)",
     "module": "suscripciones",
     "permission": "suscripciones.ver"
   },
@@ -128,28 +128,28 @@
   {
     "method": "GET",
     "path": "/v1/categorias",
-    "name": "Listar categor\u00edas",
+    "name": "Listar categorías",
     "module": "categorias",
     "permission": "categorias.ver"
   },
   {
     "method": "POST",
     "path": "/v1/categorias",
-    "name": "Crear categor\u00eda",
+    "name": "Crear categoría",
     "module": "categorias",
     "permission": "categorias.crear"
   },
   {
     "method": "PUT",
     "path": "/v1/categorias/{id}",
-    "name": "Editar categor\u00eda",
+    "name": "Editar categoría",
     "module": "categorias",
     "permission": "categorias.editar"
   },
   {
     "method": "DELETE",
     "path": "/v1/categorias/{id}",
-    "name": "Eliminar categor\u00eda",
+    "name": "Eliminar categoría",
     "module": "categorias",
     "permission": "categorias.eliminar"
   },
@@ -205,7 +205,7 @@
   {
     "method": "DELETE",
     "path": "/v1/productos/{id}/receta/{insumo_id}",
-    "name": "Eliminar l\u00ednea de receta",
+    "name": "Eliminar línea de receta",
     "module": "productos",
     "permission": "productos.recetas.editar"
   },
@@ -282,21 +282,21 @@
   {
     "method": "POST",
     "path": "/v1/pedidos/{id}/items",
-    "name": "Agregar \u00edtem",
+    "name": "Agregar ítem",
     "module": "pedidos",
     "permission": "pedidos.items.crear"
   },
   {
     "method": "PUT",
     "path": "/v1/pedidos/{id}/items/{item_id}",
-    "name": "Editar \u00edtem",
+    "name": "Editar ítem",
     "module": "pedidos",
     "permission": "pedidos.items.editar"
   },
   {
     "method": "DELETE",
     "path": "/v1/pedidos/{id}/items/{item_id}",
-    "name": "Eliminar \u00edtem",
+    "name": "Eliminar ítem",
     "module": "pedidos",
     "permission": "pedidos.items.eliminar"
   },
@@ -310,7 +310,7 @@
   {
     "method": "GET",
     "path": "/v1/productos",
-    "name": "Cat\u00e1logo de productos",
+    "name": "Catálogo de productos",
     "module": "productos",
     "permission": "productos.ver"
   },
@@ -401,7 +401,7 @@
   {
     "method": "GET",
     "path": "/v1/metodos-pago",
-    "name": "Listar m\u00e9todos de pago",
+    "name": "Listar métodos de pago",
     "module": "metodos_pago",
     "permission": "metodos_pago.ver"
   },
@@ -415,7 +415,7 @@
   {
     "method": "GET",
     "path": "/v1/ventas/notas-credito",
-    "name": "Listar Notas de Cr\u00e9dito",
+    "name": "Listar Notas de Crédito",
     "module": "notas_credito",
     "permission": "notas_credito.ver"
   },
@@ -565,5 +565,61 @@
     "name": "Eliminar proveedor",
     "module": "proveedores",
     "permission": "proveedores.eliminar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/cotizaciones",
+    "name": "Listar cotizaciones",
+    "module": "ventas",
+    "permission": "cotizaciones.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/cotizaciones",
+    "name": "Crear cotización",
+    "module": "ventas",
+    "permission": "cotizaciones.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/cotizaciones/{id}",
+    "name": "Editar cotización",
+    "module": "ventas",
+    "permission": "cotizaciones.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/cotizaciones/{id}",
+    "name": "Eliminar cotización",
+    "module": "ventas",
+    "permission": "cotizaciones.eliminar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/cotizaciones/{id}/enviar",
+    "name": "Enviar cotización",
+    "module": "ventas",
+    "permission": "cotizaciones.enviar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/cotizaciones/{id}/aceptar",
+    "name": "Aceptar cotización",
+    "module": "ventas",
+    "permission": "cotizaciones.aceptar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/cotizaciones/{id}/rechazar",
+    "name": "Rechazar cotización",
+    "module": "ventas",
+    "permission": "cotizaciones.rechazar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/cotizaciones/{id}/facturar",
+    "name": "Facturar cotización",
+    "module": "ventas",
+    "permission": "cotizaciones.facturar"
   }
 ]

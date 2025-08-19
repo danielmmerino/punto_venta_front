@@ -723,6 +723,65 @@ La pantalla tiene pestañas **Clientes** y **Proveedores**; en móviles muestra 
 ![Clientes](assets/screenshots/customers.png)
 ![Proveedores](assets/screenshots/vendors.png)
 
+## Frontend / Cotizaciones
+
+Módulo para crear y gestionar cotizaciones.
+
+### Flujo
+
+1. Búsqueda y filtros por estado, cliente y fecha.
+2. **Nueva cotización** permite escoger cliente, validez y agregar líneas.
+3. Al guardar se envía `POST /v1/cotizaciones`; editar usa `PUT`.
+4. Desde el detalle se puede **Enviar** (`POST /v1/cotizaciones/{id}/enviar`).
+5. Cotizaciones enviadas pueden **Aceptar** o **Rechazar**.
+6. Una vez aceptada se puede **Facturar** (`POST /v1/cotizaciones/{id}/facturar`).
+
+Estados: `borrador`, `enviada`, `aceptada`, `rechazada`, `expirada`.
+
+### Idempotencia
+
+| Acción | Encabezado |
+| ------ | ---------- |
+| Enviar | `Idempotency-Key: QTE-<id>-SEND-<uuid>` |
+| Aceptar | `Idempotency-Key: QTE-<id>-ACC` |
+| Rechazar | `Idempotency-Key: QTE-<id>-REJ` |
+| Facturar | `Idempotency-Key: QTE-<id>-FAC` |
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/cotizaciones` | Listar cotizaciones |
+| POST | `/v1/cotizaciones` | Crear cotización |
+| PUT | `/v1/cotizaciones/{id}` | Editar cotización |
+| DELETE | `/v1/cotizaciones/{id}` | Eliminar cotización |
+| POST | `/v1/cotizaciones/{id}/enviar` | Enviar cotización |
+| POST | `/v1/cotizaciones/{id}/aceptar` | Aceptar cotización |
+| POST | `/v1/cotizaciones/{id}/rechazar` | Rechazar cotización |
+| POST | `/v1/cotizaciones/{id}/facturar` | Facturar cotización |
+
+### Ejemplos
+
+```json
+// POST /v1/cotizaciones
+{
+  "cliente_id": 1,
+  "validez_dias": 30,
+  "items": [{"producto_id": 5, "cantidad": 2, "precio": 10.0}]
+}
+```
+
+```json
+// POST /v1/cotizaciones/1/enviar
+{
+  "mensaje": "Adjunto cotización"
+}
+```
+
+### Responsive
+
+La lista y formularios usan los mismos widgets adaptándose entre móvil y web.
+
 ## Guard Global
 
 El router redirige las rutas protegidas según el estado:
