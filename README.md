@@ -655,6 +655,41 @@ Módulo para consultar cuentas por pagar y registrar abonos a proveedores.
 
 Permisos necesarios: `compras.ver`, `compras.crear`, `compras.editar`, `compras.aprobar`, `cxp.ver` y `pagos_proveedor.crear`.
 
+## Frontend / Clientes y Proveedores
+
+Módulo para administrar clientes y proveedores del sistema.
+
+### Flujos
+
+1. La pestaña **Clientes** lista con `GET /v1/clientes?search=&activo=&page=&per_page=` y permite crear (`POST /v1/clientes`), editar (`PUT /v1/clientes/{id}`) y eliminar (`DELETE /v1/clientes/{id}`).
+2. La pestaña **Proveedores** utiliza `GET /v1/proveedores` y sus correspondientes `POST`, `PUT` y `DELETE`.
+
+### Validaciones
+
+- Campos requeridos.
+- Email con formato válido.
+- Identificación/RUC únicos mapeando errores **422** a los campos.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/clientes` | Listar clientes |
+| POST | `/v1/clientes` | Crear cliente |
+| PUT | `/v1/clientes/{id}` | Editar cliente |
+| DELETE | `/v1/clientes/{id}` | Eliminar cliente |
+| GET | `/v1/proveedores` | Listar proveedores |
+| POST | `/v1/proveedores` | Crear proveedor |
+| PUT | `/v1/proveedores/{id}` | Editar proveedor |
+| DELETE | `/v1/proveedores/{id}` | Eliminar proveedor |
+
+### Responsive
+
+La pantalla tiene pestañas **Clientes** y **Proveedores**; en móviles muestra listas y en escritorios tablas compactas reutilizando los mismos widgets. Todos los colores, espaciados y radios provienen de `ThemeExtension`.
+
+![Clientes](assets/screenshots/customers.png)
+![Proveedores](assets/screenshots/vendors.png)
+
 ## Guard Global
 
 El router redirige las rutas protegidas según el estado:
