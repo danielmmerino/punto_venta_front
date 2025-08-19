@@ -73,7 +73,7 @@ class StockPage extends HookConsumerWidget {
                     debounce.value =
                         Timer(const Duration(milliseconds: 300), () {});
                     final result =
-                        ref.watch(productsSearchProvider(query)).value ?? [];
+                        ref.watch(productsSearchProvider(query)).value ?? <Product>[];
                     return result;
                   },
                   onSelected: (p) {
