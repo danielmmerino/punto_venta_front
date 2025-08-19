@@ -156,6 +156,42 @@ Pantalla para administrar catálogos básicos del punto de venta: Impuestos, Uni
 | PUT | `/v1/categorias/{id}` | Editar categoría |
 | DELETE | `/v1/categorias/{id}` | Eliminar categoría |
 
+## Frontend / Productos
+
+Módulo para administrar productos del punto de venta.
+
+### Flujo
+
+1. Al ingresar se cargan los catálogos `impuestos?activo=true`, `unidades?activo=true` y `categorias?activo=true`.
+2. Listar productos usa `GET /v1/productos` con filtros `search`, `categoria_id` y `activo`.
+3. Crear producto envía `POST /v1/productos`; al recibir **201** se refresca la lista. El error **422** con `details.codigo` se muestra en el campo.
+4. Editar producto usa `PUT /v1/productos/{id}`.
+5. Activar o desactivar realiza `PUT /v1/productos/{id}` con `{ "activo": true|false }`.
+6. Eliminar producto realiza `DELETE /v1/productos/{id}`; si responde **409** se muestra “No se puede eliminar porque está en uso”.
+7. La búsqueda por nombre o código usa un *debounce* de 400 ms.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/productos` | Listar productos |
+| POST | `/v1/productos` | Crear producto |
+| PUT | `/v1/productos/{id}` | Editar/activar producto |
+| DELETE | `/v1/productos/{id}` | Eliminar producto |
+| POST | `/v1/productos/import` | Importar productos (opcional) |
+
+### Reglas
+
+- El precio ingresado es base (sin IVA); el cálculo final se realiza en backend.
+- Todas las peticiones incluyen `Authorization: Bearer <JWT>` y el encabezado `X-Local-Id`.
+
+### Cómo probar
+
+1. Iniciar sesión y seleccionar un local.
+2. Navegar a `/productos`.
+3. Crear, editar, activar/desactivar y eliminar un producto.
+4. Usar el campo de búsqueda para filtrar por nombre o código.
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).

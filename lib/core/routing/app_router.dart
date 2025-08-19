@@ -10,6 +10,7 @@ import '../../features/_placeholders_/subscription_blocked_page.dart';
 import '../../features/auth/ui/login_page.dart';
 import '../../features/dashboard/ui/dashboard_page.dart';
 import '../../features/_placeholders_/selector_local_page.dart';
+import '../../features/products/ui/products_page.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -48,6 +49,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/selector-local',
         builder: (context, state) => const SelectorLocalPage(),
+      ),
+      GoRoute(
+        path: '/productos',
+        builder: (context, state) => const ProductsPage(),
       ),
     ],
     redirect: (context, state) {
