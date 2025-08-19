@@ -81,7 +81,7 @@ class DashboardController extends StateNotifier<DashboardState> {
       final productos =
           await repo.fetchTopProductos(desde: desde, hasta: hasta, localId: localId);
       final cajaAbierta = await repo.isCajaAbierta(localId);
-      final sub = await repo.fetchEstadoSuscripcion();
+      final sub = await repo.fetchEstadoSuscripcion(localId: localId);
 
       final ventasTotales = ventas
           .fold<double>(0, (sum, e) => sum + e.ventasTotales);

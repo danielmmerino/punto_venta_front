@@ -11,7 +11,7 @@ Pantalla responsive (móvil y web) que permite iniciar sesión con email y contr
 1. El usuario ingresa sus credenciales y envía el formulario.
 2. `POST /v1/auth/login` devuelve `token`, expiración (`exp` o `expires_in`), `user` y `locales`.
 3. Se guarda el JWT en `flutter_secure_storage` junto con su TTL.
-4. Se verifica la suscripción con `GET /v1/estado-suscripcion`.
+4. Se verifica la suscripción con `GET /v1/estado-suscripcion?local_id=<id>`.
 5. Navegación:
    - Múltiples locales → `/selector-local`.
    - Único local → `/dashboard`.
@@ -38,7 +38,7 @@ flutter test
 | Método | Ruta | Descripción |
 | ------ | ---- | ----------- |
 | POST | `/v1/auth/login` | Inicio de sesión |
-| GET | `/v1/estado-suscripcion` | Verificación de suscripción |
+| GET | `/v1/estado-suscripcion?local_id=…` | Verificación de suscripción |
 | GET | `/v1/tenancy/context` | Contexto de locales (opcional) |
 
 ## Frontend / Selector de Empresa/Local
@@ -92,7 +92,7 @@ Todas las fechas se calculan con zona horaria `America/Guayaquil` para cortes di
 | ------ | ---- | ----------- |
 | GET | `/v1/reportes/ventas-dia` | Ventas del día por hora |
 | GET | `/v1/reportes/productos-mas-vendidos` | Top de productos del día |
-| GET | `/v1/estado-suscripcion` | Estado de suscripción para alertas |
+| GET | `/v1/estado-suscripcion?local_id=…` | Estado de suscripción para alertas |
 | GET | `/v1/caja/estado` | Estado de la caja del local actual |
 
 La interfaz es responsive y utiliza los mismos componentes en móvil y web.
@@ -859,7 +859,7 @@ Las respuestas `401` provocan un `refresh()` automático; `403` consulta el esta
 | POST | `/v1/auth/login` | Inicio de sesión |
 | POST | `/v1/auth/refresh` | Renovación de token |
 | GET | `/v1/auth/me` | Perfil actual |
-| GET | `/v1/estado-suscripcion` | Verificación de suscripción |
+| GET | `/v1/estado-suscripcion?local_id=…` | Verificación de suscripción |
 
 ## Cómo correr
 

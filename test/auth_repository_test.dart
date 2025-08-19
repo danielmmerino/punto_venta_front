@@ -36,6 +36,7 @@ void main() {
         data: {
           'token': 'abc',
           'expires_in': 86400,
+          'local_id': 1,
           'user': {'id': 1, 'nombre': 'Demo', 'email': 'd@e.com'},
         },
       ),
@@ -44,6 +45,7 @@ void main() {
     await repo.login('demo', 'pw');
 
     expect(await storage.read(key: 'token'), 'abc');
+    expect(await storage.read(key: 'local_id'), '1');
     final exp = await repo.getExpiresAt();
     expect(exp!.difference(DateTime.now()).inHours, closeTo(24, 1));
   });
@@ -60,6 +62,7 @@ void main() {
         data: {
           'token': 'abc',
           'exp': DateTime.now().add(const Duration(hours: 10)).millisecondsSinceEpoch ~/ 1000,
+          'local_id': 2,
           'user': {'id': 1, 'nombre': 'Demo', 'email': 'd@e.com'},
         },
       ),
@@ -83,6 +86,7 @@ void main() {
         data: {
           'token': 'abc',
           'expires_in': 86400,
+          'local_id': 3,
           // no user field
         },
       ),

@@ -72,14 +72,15 @@ class DashboardRepository {
     }
   }
 
-  Future<SubscriptionInfo> fetchEstadoSuscripcion() async {
+  Future<SubscriptionInfo> fetchEstadoSuscripcion({required int localId}) async {
     final now = DateTime.now();
     if (_cachedSub != null &&
         _cachedAt != null &&
         now.difference(_cachedAt!).inMinutes < 5) {
       return _cachedSub!;
     }
-    final resp = await _dio.get('/v1/estado-suscripcion');
+    final resp = await _dio.get('/v1/estado-suscripcion',
+        queryParameters: {'local_id': localId});
     final sub = SubscriptionInfo.fromJson(resp.data as Map<String, dynamic>);
     _cachedSub = sub;
     _cachedAt = now;
