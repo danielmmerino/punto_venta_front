@@ -12,7 +12,12 @@ class VendorDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     final spacing = Theme.of(context).extension<AppSpacing>()!;
     return AlertDialog(
-      title: Text(vendor.razonSocial),
+      title: Row(
+        children: [
+          Expanded(child: Text(vendor.razonSocial)),
+          Chip(label: Text(vendor.activo ? 'Activo' : 'Inactivo')),
+        ],
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,6 +35,14 @@ class VendorDetail extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: const Text('Cerrar'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'delete'),
+          child: const Text('Eliminar'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, 'edit'),
+          child: const Text('Editar'),
         ),
       ],
     );

@@ -67,6 +67,13 @@ class _CustomerFormState extends State<CustomerForm> {
               TextFormField(
                 controller: _email,
                 decoration: const InputDecoration(labelText: 'Email'),
+                validator: (v) {
+                  if (v == null || v.isEmpty) return null;
+                  final emailReg =
+                      RegExp(r'^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$');
+                  if (!emailReg.hasMatch(v)) return 'Email inválido';
+                  return null;
+                },
               ),
               SizedBox(height: spacing.sm),
               TextFormField(

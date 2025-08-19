@@ -154,6 +154,39 @@ Módulo administrativo para gestionar usuarios del local actual y sus roles. Dis
 
 El listado utiliza los mismos componentes para móvil y web; en pantallas estrechas se muestra como lista y en escritorios como tabla compacta. Todos los estilos provienen de los tokens de tema (`AppColors`, `AppSpacing`, `AppRadius`).
 
+## Frontend / Clientes y Proveedores
+
+Módulo para administrar clientes y proveedores del punto de venta. La pantalla posee pestañas **Clientes** y **Proveedores** con buscador, filtro por estado y botón **Nuevo**.
+
+### Flujos
+
+- Listar con `GET /v1/clientes` y `GET /v1/proveedores` usando parámetros `search`, `activo`, `page` y `per_page`.
+- Crear envía `POST /v1/clientes` o `POST /v1/proveedores`.
+- Editar usa `PUT /v1/clientes/{id}` o `PUT /v1/proveedores/{id}`.
+- Eliminar realiza `DELETE /v1/clientes/{id}` o `DELETE /v1/proveedores/{id}`; el **409** muestra "En uso".
+- El detalle se muestra en diálogo con acciones **Editar** y **Eliminar**.
+
+### Validaciones
+
+- Campos requeridos según entidad.
+- Email con formato válido.
+- Identificación/RUC únicos; los errores **422** se mapean al formulario.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/clientes` | Listar clientes |
+| POST | `/v1/clientes` | Crear cliente |
+| PUT | `/v1/clientes/{id}` | Editar cliente |
+| DELETE | `/v1/clientes/{id}` | Eliminar cliente |
+| GET | `/v1/proveedores` | Listar proveedores |
+| POST | `/v1/proveedores` | Crear proveedor |
+| PUT | `/v1/proveedores/{id}` | Editar proveedor |
+| DELETE | `/v1/proveedores/{id}` | Eliminar proveedor |
+
+La interfaz es responsive: lista en móvil y tabla compacta en web, reutilizando `AppSpacing` y demás extensiones del tema.
+
 ## Frontend / Catálogos
 
 Pantalla para administrar catálogos básicos del punto de venta: Impuestos, Unidades, Métodos de pago y Categorías.
