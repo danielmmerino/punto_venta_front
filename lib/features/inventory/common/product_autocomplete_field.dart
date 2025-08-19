@@ -36,7 +36,8 @@ class ProductAutocompleteField extends HookConsumerWidget {
         if (query.length < 2) return const Iterable<Product>.empty();
         debounce.value?.cancel();
         debounce.value = Timer(const Duration(milliseconds: 300), () {});
-        final result = ref.watch(productsSearchProvider(query)).value ?? [];
+        final result =
+            ref.watch(productsSearchProvider(query)).value ?? <Product>[];
         return result;
       },
       onSelected: (p) {
