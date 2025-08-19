@@ -29,20 +29,23 @@ class VendorsController extends StateNotifier<VendorsState> {
   }
 
   Future<Vendor?> create(Map<String, dynamic> dto) async {
+    final repo = _ref.read(vendorsRepositoryProvider);
     try {
-      final repo = _ref.read(vendorsRepositoryProvider);
       final v = await repo.create(dto);
       state = state.copyWith(vendors: [...state.vendors, v]);
       return v;
     } on DioException catch (e) {
       state = state.copyWith(error: e.message);
+      if (e.response?.statusCode == 422) {
+        throw repo.map422(e);
+      }
       rethrow;
     }
   }
 
   Future<Vendor?> update(int id, Map<String, dynamic> dto) async {
+    final repo = _ref.read(vendorsRepositoryProvider);
     try {
-      final repo = _ref.read(vendorsRepositoryProvider);
       final v = await repo.update(id, dto);
       final idx = state.vendors.indexWhere((e) => e.id == id);
       if (idx != -1) {
@@ -53,6 +56,9 @@ class VendorsController extends StateNotifier<VendorsState> {
       return v;
     } on DioException catch (e) {
       state = state.copyWith(error: e.message);
+      if (e.response?.statusCode == 422) {
+        throw repo.map422(e);
+      }
       rethrow;
     }
   }
