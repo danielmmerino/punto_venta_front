@@ -131,6 +131,31 @@ Módulo administrativo para gestionar usuarios del local actual y sus roles. Dis
 
 El listado utiliza los mismos componentes para móvil y web; en pantallas estrechas se muestra como lista y en escritorios como tabla compacta. Todos los estilos provienen de los tokens de tema (`AppColors`, `AppSpacing`, `AppRadius`).
 
+## Frontend / Catálogos
+
+Pantalla para administrar catálogos básicos del punto de venta: Impuestos, Unidades, Métodos de pago y Categorías.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/impuestos` | Listar impuestos |
+| POST | `/v1/impuestos` | Crear impuesto |
+| PUT | `/v1/impuestos/{id}` | Editar impuesto |
+| DELETE | `/v1/impuestos/{id}` | Eliminar impuesto |
+| GET | `/v1/unidades` | Listar unidades |
+| POST | `/v1/unidades` | Crear unidad |
+| PUT | `/v1/unidades/{id}` | Editar unidad |
+| DELETE | `/v1/unidades/{id}` | Eliminar unidad |
+| GET | `/v1/metodos-pago` | Listar métodos de pago |
+| POST | `/v1/metodos-pago` | Crear método de pago |
+| PUT | `/v1/metodos-pago/{id}` | Editar método de pago |
+| DELETE | `/v1/metodos-pago/{id}` | Eliminar método de pago |
+| GET | `/v1/categorias` | Listar categorías |
+| POST | `/v1/categorias` | Crear categoría |
+| PUT | `/v1/categorias/{id}` | Editar categoría |
+| DELETE | `/v1/categorias/{id}` | Eliminar categoría |
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).

@@ -11,5 +11,13 @@
   {"method":"DELETE","path":"/v1/usuarios/{id}","name":"Eliminar usuario","module":"usuarios","permission":"usuarios.eliminar"},
   {"method":"POST","path":"/v1/usuarios/{id}/roles","name":"Asignar roles a usuario","module":"usuarios","permission":"roles.editar"},
   {"method":"GET","path":"/v1/roles","name":"Listar roles","module":"usuarios","permission":"roles.ver"},
-  {"method":"GET","path":"/v1/permisos","name":"Listar permisos","module":"usuarios","permission":"permisos.ver"}
+  {"method":"GET","path":"/v1/permisos","name":"Listar permisos","module":"usuarios","permission":"permisos.ver"},
+  {"method": "GET", "path": "/v1/unidades", "name": "Listar unidades", "module": "unidades", "permission": "unidades.ver"},
+  {"method": "POST", "path": "/v1/unidades", "name": "Crear unidad", "module": "unidades", "permission": "unidades.crear"},
+  {"method": "PUT", "path": "/v1/unidades/{id}", "name": "Editar unidad", "module": "unidades", "permission": "unidades.editar"},
+  {"method": "DELETE", "path": "/v1/unidades/{id}", "name": "Eliminar unidad", "module": "unidades", "permission": "unidades.eliminar"},
+  {"method": "GET", "path": "/v1/categorias", "name": "Listar categorías", "module": "categorias", "permission": "categorias.ver"},
+  {"method": "POST", "path": "/v1/categorias", "name": "Crear categoría", "module": "categorias", "permission": "categorias.crear"},
+  {"method": "PUT", "path": "/v1/categorias/{id}", "name": "Editar categoría", "module": "categorias", "permission": "categorias.editar"},
+  {"method": "DELETE", "path": "/v1/categorias/{id}", "name": "Eliminar categoría", "module": "categorias", "permission": "categorias.eliminar"}
 ]
