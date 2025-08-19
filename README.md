@@ -524,6 +524,57 @@ La interfaz es responsive para móvil y web y todos los colores, espaciados y ra
 | GET | `/v1/stock?bodega_id=&producto_id=` | Consultar stock |
 | GET | `/v1/productos?search=&activo=true` | Autocompletar producto |
 
+## Frontend / Ajustes y Traspasos
+
+Pantalla para registrar ajustes de inventario y traspasos entre bodegas del mismo local.
+
+### Flujo
+
+Tabs **Ajuste** | **Traspaso**.
+
+#### Ajuste
+1. Seleccionar bodega y motivo.
+2. Agregar líneas con producto, cantidad (+/–) y costo opcional.
+3. Envío `POST /v1/inventario/ajuste` con `Idempotency-Key: AJU-<bodegaId>-<uuid>`.
+4. Éxito → limpiar formulario y mostrar confirmación.
+
+#### Traspaso
+1. Seleccionar bodegas de origen y destino (distintas).
+2. Agregar líneas con producto y cantidad (> 0).
+3. Envío `POST /v1/inventario/traspaso` con `Idempotency-Key: TRA-<origen>-<destino>-<uuid>`.
+4. Éxito → limpiar formulario y confirmar.
+
+### Validaciones
+- Ajuste: bodega y motivo requeridos; al menos una línea; cantidades no 0; costo ≥ 0.
+- Traspaso: origen y destino distintos; al menos una línea; cantidades > 0.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| POST | `/v1/inventario/ajuste` | Crear ajuste de inventario |
+| POST | `/v1/inventario/traspaso` | Crear traspaso entre bodegas |
+| GET | `/v1/bodegas` | Listar bodegas del local |
+| GET | `/v1/productos?search=&activo=true` | Autocompletar producto |
+
+#### Ejemplo ajuste
+
+```json
+// Request
+{ "bodega_id":1, "motivo":"Rectificación", "items":[{"producto_id":10,"cantidad":-2,"costo":5}] }
+// Response
+{ "ajuste_id": 1 }
+```
+
+#### Ejemplo traspaso
+
+```json
+// Request
+{ "bodega_origen":1, "bodega_destino":2, "items":[{"producto_id":10,"cantidad":3}] }
+// Response
+{ "traspaso_id": 5 }
+```
+
 ## Guard Global
 
 El router redirige las rutas protegidas según el estado:
