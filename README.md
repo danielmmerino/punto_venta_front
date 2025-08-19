@@ -261,6 +261,45 @@ Se refrescan estados con *polling* cada 15 s. Opcionalmente se puede usar
 La UI es responsive y utiliza los tokens de tema (`AppColors`, `AppSpacing`,
 `AppRadius`) en móvil y web.
 
+## Frontend / Tomar Pedido (Mesero)
+
+Pantalla responsive (móvil y web) para que el mesero tome pedidos por mesa.
+
+### Flujo
+
+1. Detectar si ya existe un pedido abierto para la mesa con  
+   `GET /v1/pedidos?mesa_id=&estado=abierto&limit=1`.  
+   - Si existe, se reutiliza.  
+   - Si no, se crea con `POST /v1/pedidos`.
+2. Seleccionar productos del catálogo (`GET /v1/productos?activo=true`) y agregarlos al pedido.
+3. Cada ítem puede editarse (cantidad y notas) o eliminarse mientras no se haya enviado.
+4. Mostrar subtotal, impuestos y total calculados en el front y sincronizados con `GET /v1/pedidos/{id}`.
+5. Enviar los ítems pendientes a cocina usando  
+   `POST /v1/pedidos/{id}/enviar-cocina` con el encabezado  
+   `Idempotency-Key: PED-<id>-<uuid>`.
+
+Todas las peticiones incluyen el header `X-Local-Id` del local seleccionado.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| POST | `/v1/pedidos` | Crear pedido |
+| GET | `/v1/pedidos?mesa_id=&estado=abierto&limit=1` | Buscar pedido abierto por mesa |
+| GET | `/v1/pedidos/{id}` | Detalle de pedido y totales |
+| POST | `/v1/pedidos/{id}/items` | Agregar ítem |
+| PUT | `/v1/pedidos/{id}/items/{item_id}` | Editar ítem |
+| DELETE | `/v1/pedidos/{id}/items/{item_id}` | Eliminar ítem |
+| POST | `/v1/pedidos/{id}/enviar-cocina` | Enviar a cocina (requiere `Idempotency-Key`) |
+| GET | `/v1/productos?activo=true&search=&categoria_id=` | Catálogo de productos |
+
+### Responsive
+
+Un mismo código soporta móvil y web. En móviles el pedido se muestra en un
+*bottom sheet* y en pantallas anchas se fija a la derecha en un `OrderPanel`.
+Los colores, espaciados y radios provienen de las extensiones de tema
+(`AppColors`, `AppSpacing`, `AppRadius`).
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).

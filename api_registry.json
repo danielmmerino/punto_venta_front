@@ -34,5 +34,13 @@
   {"method":"POST","path":"/v1/mesas","name":"Crear mesa","module":"mesas","permission":"mesas.crear"},
   {"method":"PUT","path":"/v1/mesas/{id}","name":"Editar mesa","module":"mesas","permission":"mesas.editar"},
   {"method":"DELETE","path":"/v1/mesas/{id}","name":"Eliminar mesa","module":"mesas","permission":"mesas.eliminar"},
-  {"method":"GET","path":"/v1/mesas/estado","name":"Estados de mesas (batch)","module":"mesas","permission":"mesas.ver"}
+    {"method":"GET","path":"/v1/mesas/estado","name":"Estados de mesas (batch)","module":"mesas","permission":"mesas.ver"},
+    {"method":"POST","path":"/v1/pedidos","name":"Crear pedido","module":"pedidos","permission":"pedidos.crear"},
+    {"method":"GET","path":"/v1/pedidos","name":"Buscar pedido abierto por mesa","module":"pedidos","permission":"pedidos.ver"},
+    {"method":"GET","path":"/v1/pedidos/{id}","name":"Detalle de pedido","module":"pedidos","permission":"pedidos.ver"},
+    {"method":"POST","path":"/v1/pedidos/{id}/items","name":"Agregar ítem","module":"pedidos","permission":"pedidos.items.crear"},
+    {"method":"PUT","path":"/v1/pedidos/{id}/items/{item_id}","name":"Editar ítem","module":"pedidos","permission":"pedidos.items.editar"},
+    {"method":"DELETE","path":"/v1/pedidos/{id}/items/{item_id}","name":"Eliminar ítem","module":"pedidos","permission":"pedidos.items.eliminar"},
+    {"method":"POST","path":"/v1/pedidos/{id}/enviar-cocina","name":"Enviar a cocina","module":"kds","permission":"pedidos.enviar_cocina"},
+    {"method":"GET","path":"/v1/productos","name":"Catálogo de productos","module":"productos","permission":"productos.ver"}
 ]
