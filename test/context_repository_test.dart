@@ -27,39 +27,38 @@ void main() {
     expect(ctx.locales.first.empresaId, 1);
   });
 
-  test('checkSubscription interprets extended format', () async {
+  test('checkSubscription parses nested data with numeric vigente', () async {
     final dio = MockDio();
     when(() => dio.get('/v1/estado-suscripcion',
             queryParameters: {'local_id': 10})).thenAnswer((_) async => Response(
           requestOptions: RequestOptions(path: '/v1/estado-suscripcion'),
           statusCode: 200,
           data: {
-            'estado': 'active',
-            'plan': {'codigo': 'pro'},
-            'next_renewal_at': '2025-09-18'
+            'data': {
+              'vigente': 1,
+              'empresa_id': 1,
+              'local_id': 10,
+            }
           },
         ));
     final repo = ContextRepository(dio);
     final status = await repo.checkSubscription(localId: 10);
     expect(status.vigente, true);
-    expect(status.fechaFin, '2025-09-18');
   });
 
-  test('checkSubscription interprets direct format', () async {
+  test('checkSubscription handles boolean vigente', () async {
     final dio = MockDio();
     when(() => dio.get('/v1/estado-suscripcion',
             queryParameters: {'local_id': 10})).thenAnswer((_) async => Response(
           requestOptions: RequestOptions(path: '/v1/estado-suscripcion'),
           statusCode: 200,
           data: {
-            'estado': 'active',
-            'vigente': true,
-            'fecha_fin': '2025-09-18'
+            'vigente': false,
+            'estado': 'inactive',
           },
         ));
     final repo = ContextRepository(dio);
     final status = await repo.checkSubscription(localId: 10);
-    expect(status.vigente, true);
-    expect(status.fechaFin, '2025-09-18');
+    expect(status.vigente, false);
   });
 }

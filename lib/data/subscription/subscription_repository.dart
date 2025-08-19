@@ -24,7 +24,18 @@ class SubscriptionRepository {
       final resp = await dio.get('/v1/estado-suscripcion',
           queryParameters: localId != null ? {'local_id': localId} : null);
       if (resp.statusCode == 200) {
-        _active = resp.data['estado'] == 'active';
+        final data = resp.data is Map<String, dynamic> &&
+                resp.data.containsKey('data')
+            ? resp.data['data'] as Map<String, dynamic>
+            : resp.data as Map<String, dynamic>;
+        final vigente = data['vigente'];
+        if (vigente is bool) {
+          _active = vigente;
+        } else if (vigente is num) {
+          _active = vigente != 0;
+        } else {
+          _active = false;
+        }
       } else if (resp.statusCode == 403) {
         _active = false;
       }
