@@ -17,6 +17,10 @@ class InvoiceDetailState {
       invoice != null &&
       (invoice!.estadoSri == 'pendiente' || invoice!.estadoSri == 'rechazada');
 
+  bool get canCancel =>
+      invoice != null &&
+      (invoice!.estadoSri == 'autorizada' || invoice!.estadoSri == 'enviada');
+
   InvoiceDetailState copyWith({
     bool? isLoading,
     Invoice? invoice,

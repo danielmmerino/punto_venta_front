@@ -446,6 +446,31 @@ Ejemplo:
 flutter run --dart-define=BASE_URL=https://api.staging.tuapp.com -d chrome
 ```
 
+## Frontend / Anulación - Nota de Crédito
+
+Flujo de anulación de factura que genera una Nota de Crédito electrónica.
+
+### Flujo
+
+1. El usuario ingresa el **motivo** (10–200 caracteres).
+2. `POST /v1/facturas/{id}/anular` crea la NC usando el encabezado `Idempotency-Key: NC-<facturaId>-<uuid>`.
+3. La respuesta retorna `nota_credito_id`, número (si existe) y `estado_sri` para mostrar el resultado.
+
+### Manejo de errores
+
+- **409**: factura ya anulada.
+- **422**: factura no elegible; se muestra el mensaje del backend.
+- Estados SRI `rechazada` incluyen `mensajes` para feedback y permiten reintentar.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| POST | `/v1/facturas/{id}/anular` | Genera nota de crédito |
+| GET | `/v1/ventas/notas-credito` | Listar Notas de Crédito |
+
+Las descargas de PDF/XML de la NC se habilitarán cuando el backend exponga `/v1/notas-credito/{id}/pdf` y `/v1/notas-credito/{id}/xml`.
+
 ## Guard Global
 
 El router redirige las rutas protegidas según el estado:

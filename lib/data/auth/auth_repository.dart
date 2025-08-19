@@ -160,3 +160,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = const Unauthenticated();
   }
 }
+
+/// Provider to check if current user has a specific permission.
+final hasPermissionProvider = Provider.family<bool, String>((ref, perm) {
+  final auth = ref.watch(authStateProvider);
+  return auth is Authenticated && auth.user.permisos.contains(perm);
+});

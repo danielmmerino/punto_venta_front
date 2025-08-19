@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/theme/app_spacing.dart';
+import '../../../data/auth/auth_repository.dart';
+import '../../invoicing/ui/cancel_invoice_dialog.dart';
 import '../controllers/invoice_detail_controller.dart';
 import '../controllers/invoice_detail_state.dart';
 import '../data/models/invoice.dart';
@@ -59,6 +61,17 @@ class InvoiceDetailPage extends HookConsumerWidget {
                           child: state.isLoading
                               ? const CircularProgressIndicator()
                               : const Text('Emitir ahora'),
+                      ),
+                      if (state.canCancel &&
+                          ref.watch(hasPermissionProvider('facturas.anular')))
+                        ElevatedButton(
+                          onPressed: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (_) => CancelInvoiceDialog(invoiceId: id),
+                            );
+                          },
+                          child: const Text('Anular'),
                         ),
                     ],
                   ),
