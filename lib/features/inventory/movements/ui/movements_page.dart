@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../adjust/ui/adjust_page.dart';
 import '../../transfer/ui/transfer_page.dart';
+import '../../../../core/ui/menu_drawer.dart';
 
 class InventoryMovementsPage extends StatelessWidget {
   const InventoryMovementsPage({super.key});
@@ -20,6 +21,7 @@ class InventoryMovementsPage extends StatelessWidget {
             ],
           ),
         ),
+        drawer: const MenuDrawer(),
         body: const TabBarView(
           children: [
             AdjustPage(),
