@@ -29,7 +29,7 @@ class FakeDashboardRepository implements DashboardRepository {
   Future<bool> isCajaAbierta(int localId) async => true;
 
   @override
-  Future<SubscriptionInfo> fetchEstadoSuscripcion() async =>
+  Future<SubscriptionInfo> fetchEstadoSuscripcion({required int localId}) async =>
       const SubscriptionInfo(estado: 'active');
 }
 

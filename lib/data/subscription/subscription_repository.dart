@@ -2,6 +2,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:dio/dio.dart';
 
 import '../../core/network/dio_client.dart';
+import '../auth/auth_repository.dart';
 
 final subscriptionRepositoryProvider = Provider<SubscriptionRepository>((ref) {
   return SubscriptionRepository(ref); 
@@ -17,8 +18,11 @@ class SubscriptionRepository {
 
   Future<void> refresh() async {
     final dio = _ref.read(dioProvider);
+    final authRepo = _ref.read(authRepositoryProvider);
     try {
-      final resp = await dio.get('/v1/estado-suscripcion');
+      final localId = await authRepo.getLocalId();
+      final resp = await dio.get('/v1/estado-suscripcion',
+          queryParameters: localId != null ? {'local_id': localId} : null);
       if (resp.statusCode == 200) {
         _active = resp.data['estado'] == 'active';
       } else if (resp.statusCode == 403) {

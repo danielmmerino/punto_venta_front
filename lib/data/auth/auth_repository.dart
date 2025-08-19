@@ -53,12 +53,17 @@ class AuthRepository {
   final SecureStorage _storage;
   static const _tokenKey = 'token';
   static const _expiresKey = 'expires_at';
+  static const _localIdKey = 'local_id';
 
   Future<LoginResponse> login(String email, String password) async {
     final resp = await _dio.post('/v1/auth/login',
         data: {'email': email, 'password': password});
     final token = resp.data['token'] as String;
     await _storage.write(key: _tokenKey, value: token);
+    final localId = resp.data['local_id'] as int?;
+    if (localId != null) {
+      await _storage.write(key: _localIdKey, value: localId.toString());
+    }
 
     DateTime expiresAt;
     final exp = resp.data['exp'] as int?;
@@ -119,6 +124,7 @@ class AuthRepository {
   Future<void> logout() async {
     await _storage.delete(key: _tokenKey);
     await _storage.delete(key: _expiresKey);
+    await _storage.delete(key: _localIdKey);
   }
 
   Future<User> me() async {
@@ -129,6 +135,11 @@ class AuthRepository {
   }
 
   Future<String?> getToken() => _storage.read(key: _tokenKey);
+
+  Future<int?> getLocalId() async {
+    final str = await _storage.read(key: _localIdKey);
+    return str != null ? int.tryParse(str) : null;
+  }
 
   Future<DateTime?> getExpiresAt() async {
     final str = await _storage.read(key: _expiresKey);
