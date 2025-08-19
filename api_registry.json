@@ -23,7 +23,7 @@
   {
     "method": "GET",
     "path": "/v1/reportes/ventas-dia",
-    "name": "Ventas por hora",
+    "name": "Reporte de ventas por día",
     "module": "reportes",
     "permission": "reportes.ventas.ver"
   },
@@ -32,7 +32,35 @@
     "path": "/v1/reportes/productos-mas-vendidos",
     "name": "Top productos",
     "module": "reportes",
-    "permission": "reportes.productos.ver"
+    "permission": "reportes.ventas.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/reportes/caja",
+    "name": "Reporte de caja",
+    "module": "reportes",
+    "permission": "reportes.caja.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/reportes/inventario-bajo",
+    "name": "Inventario bajo mínimos",
+    "module": "reportes",
+    "permission": "reportes.inventario.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/reportes/cxp",
+    "name": "Reporte CxP",
+    "module": "reportes",
+    "permission": "reportes.cxp.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/reportes/cxc",
+    "name": "Reporte CxC",
+    "module": "reportes",
+    "permission": "reportes.cxc.ver"
   },
   {
     "method": "GET",
