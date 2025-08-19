@@ -56,4 +56,6 @@
     {"method":"POST","path":"/v1/facturas","name":"Crear factura (por cuenta_id)","module":"ventas","permission":"facturas.crear"},
     {"method":"POST","path":"/v1/pagos-venta","name":"Registrar pago de venta","module":"ventas","permission":"ventas.pagos.crear"},
     {"method":"GET","path":"/v1/metodos-pago","name":"Listar métodos de pago","module":"metodos_pago","permission":"metodos_pago.ver"}
+    ,{"method":"POST","path":"/v1/facturas/{id}/anular","name":"Anular factura (genera NC)","module":"facturas","permission":"facturas.anular"}
+    ,{"method":"GET","path":"/v1/ventas/notas-credito","name":"Listar Notas de Crédito","module":"notas_credito","permission":"notas_credito.ver"}
 ]

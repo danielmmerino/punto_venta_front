@@ -69,4 +69,32 @@ void main() {
     expect(key, isNotNull);
     expect(key, startsWith('EMIT-1-'));
   });
+
+  test('cancel adds Idempotency-Key header', () async {
+    final dio = MockDio();
+    when(() => dio.request('/v1/facturas/1/anular',
+            method: 'POST',
+            data: any(named: 'data'),
+            options: any(named: 'options')))
+        .thenAnswer((_) async => Response(
+              requestOptions: RequestOptions(path: '/v1/facturas/1/anular'),
+              statusCode: 200,
+              data: {
+                'factura_id': 1,
+                'nota_credito_id': 2,
+                'estado_sri': 'enviada',
+              },
+            ));
+    final repo = InvoicesRepository(dio);
+    await repo.cancel(1, 'motivo valido 123');
+    final captured = verify(() => dio.request('/v1/facturas/1/anular',
+            method: 'POST',
+            data: any(named: 'data'),
+            options: captureAny(named: 'options')))
+        .captured
+        .first as Options;
+    final key = captured.headers?['Idempotency-Key'] as String?;
+    expect(key, isNotNull);
+    expect(key, startsWith('NC-1-'));
+  });
 }

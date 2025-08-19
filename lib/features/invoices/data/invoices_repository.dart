@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../core/network/dio_client.dart';
 import 'models/invoice.dart';
+import 'models/cancel_result.dart';
 
 final invoicesRepositoryProvider = Provider<InvoicesRepository>((ref) {
   final dio = ref.read(dioProvider);
@@ -14,6 +16,7 @@ class InvoicesRepository {
   InvoicesRepository(this._dio);
 
   final Dio _dio;
+  final _uuid = const Uuid();
 
   Future<Response<dynamic>> _requestWithFallback(
     String method,
@@ -53,6 +56,20 @@ class InvoicesRepository {
       options: options,
     );
     return (resp.data as Map<String, dynamic>)['estado_sri'] as String;
+  }
+
+  Future<CancelInvoiceResult> cancel(int id, String motivo) async {
+    final key = 'NC-$id-${_uuid.v4()}';
+    final options = Options(headers: {'Idempotency-Key': key});
+    final resp = await _requestWithFallback(
+      'POST',
+      '/v1/facturas/$id/anular',
+      '/v1/ventas/facturas/$id/anular',
+      data: {'motivo': motivo},
+      options: options,
+    );
+    return CancelInvoiceResult.fromJson(
+        Map<String, dynamic>.from(resp.data as Map));
   }
 
   Future<Response<dynamic>> downloadPdf(int id) async {
