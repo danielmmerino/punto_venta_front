@@ -386,6 +386,38 @@ Es totalmente responsive y reutiliza los mismos componentes en móvil y web.
 
 Todas las peticiones incluyen el header `X-Local-Id` y las operaciones `POST` usan un `Idempotency-Key` para evitar duplicados.
 
+## Frontend / Split bill
+
+Pantalla para dividir la cuenta de un pedido en N partes por ítems, personas o porcentajes. La interfaz usa un único código responsive para móvil y web, con colores, espaciados y radios provenientes de los `ThemeExtension`.
+
+### Estrategias y UX
+
+- **Ítems**: permite asignar manualmente cantidades de cada ítem a las cuentas. Drag & drop en web y selector con stepper en móvil.
+- **Personas**: se ingresa el número de comensales (2..12) y cada ítem se prorratea uniformemente; se pueden ajustar cantidades por cuenta.
+- **% Porcentaje**: se definen porcentajes que deben sumar 100 % y se prorratean bases imponibles e impuestos por tarifa.
+
+### Validaciones
+
+- Todos los ítems deben estar completamente asignados.
+- Los porcentajes deben sumar 100 % con una tolerancia de ±0.01.
+- No se permiten cantidades negativas ni superiores a las del pedido.
+- Las porciones ya facturadas de un ítem se muestran bloqueadas.
+
+### Prorrateo y compatibilidad
+
+- El cálculo se realiza por bases imponibles por tarifa y luego se recalcula el IVA correspondiente a cada cuenta.
+- Si `POST /v1/facturas` no acepta `cuenta_id`, se consulta `GET /v1/cuentas/{id}` para reconstruir los ítems y enviar la factura con esas líneas.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/pedidos/{id}` | Cargar items y totales del pedido |
+| POST | `/v1/pedidos/{id}/split` | Guardar split del pedido |
+| GET | `/v1/cuentas?pedido_id=…` | Listar cuentas generadas |
+| POST | `/v1/facturas` | Crear factura por `cuenta_id` |
+| POST | `/v1/pagos-venta` | Registrar pagos de una factura |
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).
