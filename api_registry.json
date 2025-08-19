@@ -49,5 +49,9 @@
     {"method":"POST","path":"/v1/comandas/{id}/served","name":"Servir comanda","module":"kds","permission":"kds.bump"},
     {"method":"POST","path":"/v1/comandas/{id}/bump","name":"Servir comanda (compat)","module":"kds","permission":"kds.bump"},
     {"method":"GET","path":"/v1/kds/estaciones","name":"Listar estaciones KDS","module":"kds","permission":"kds.estaciones.ver"},
-    {"method":"GET","path":"/v1/kds/stream","name":"Stream KDS (SSE)","module":"kds","permission":"kds.stream.ver"}
+    {"method":"GET","path":"/v1/kds/stream","name":"Stream KDS (SSE)","module":"kds","permission":"kds.stream.ver"},
+    {"method":"GET","path":"/v1/productos","name":"Buscar productos (q=)","module":"productos","permission":"productos.ver"},
+    {"method":"POST","path":"/v1/facturas","name":"Crear factura","module":"ventas","permission":"facturas.crear"},
+    {"method":"POST","path":"/v1/pagos-venta","name":"Registrar pago de venta","module":"ventas","permission":"ventas.pagos.crear"},
+    {"method":"GET","path":"/v1/metodos-pago","name":"Listar métodos de pago","module":"metodos_pago","permission":"metodos_pago.ver"}
 ]

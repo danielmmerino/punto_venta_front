@@ -346,6 +346,46 @@ Pantalla que muestra la cola de comandas y permite avanzar su estado en tiempo r
 - Mismo código soporta móvil (tabs) y web (tres columnas).
 - Todos los colores, espaciados y radios provienen de `AppColors`, `AppSpacing` y `AppRadius`.
 
+## Frontend / POS (Carrito y Cobro)
+
+Pantalla de punto de venta para búsqueda de productos, gestión de carrito, cálculos de impuestos y registro de pagos.
+Es totalmente responsive y reutiliza los mismos componentes en móvil y web.
+
+### Flujo
+
+1. Buscar productos con `GET /v1/productos?q=` y agregar al carrito.
+2. Editar cantidades y aplicar descuentos por línea.
+3. Calcular subtotal, IVA y total en tiempo real en el front.
+4. Opcionalmente seleccionar un cliente.
+5. Emitir factura con `POST /v1/facturas` (si responde **404** se intenta `/v1/ventas/facturas`).
+6. Registrar uno o varios pagos mediante `POST /v1/pagos-venta`.
+7. Al completar la venta se muestra resumen y se limpia el carrito.
+
+### Reglas de descuento y totales
+
+- Cantidad mínima de 1 unidad.
+- Descuento por línea entre 0 y el importe de la línea.
+- Totales front: Subtotal, Descuento, Base imponible por tarifa, IVA y Total.
+- Los valores se validan nuevamente con la respuesta del backend al crear la factura.
+
+### Pagos
+
+- Soporta pagos mixtos (efectivo, tarjeta, transferencia, etc.).
+- Muestra pendientes y cambio cuando aplica.
+- No permite pagos en efectivo si `GET /v1/caja/estado` indica que la caja está cerrada.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/productos` | Buscar productos (`q=`) |
+| POST | `/v1/facturas` | Crear factura (fallback `/v1/ventas/facturas`) |
+| POST | `/v1/pagos-venta` | Registrar pago de venta |
+| GET | `/v1/metodos-pago` | Listar métodos de pago |
+| GET | `/v1/caja/estado` | Estado de caja por local |
+
+Todas las peticiones incluyen el header `X-Local-Id` y las operaciones `POST` usan un `Idempotency-Key` para evitar duplicados.
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).
