@@ -45,8 +45,10 @@ class FakeDashboardRepository implements DashboardRepository {
   }
 }
 
-class FakeContextController extends StateNotifier<ContextState> {
-  FakeContextController() : super(const ContextState(localId: 1));
+class FakeContextController extends ContextController {
+  FakeContextController(Ref ref) : super(ref) {
+    state = const ContextState(localId: 1);
+  }
 }
 
 void main() {
@@ -54,7 +56,7 @@ void main() {
     final container = ProviderContainer(overrides: [
       dashboardRepositoryProvider.overrideWithValue(FakeDashboardRepository()),
       contextControllerProvider.overrideWith(
-        (ref) => FakeContextController(),
+        (ref) => FakeContextController(ref),
       ),
     ]);
     final controller = container.read(dashboardControllerProvider.notifier);
