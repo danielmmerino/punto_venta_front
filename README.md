@@ -300,6 +300,52 @@ Un mismo código soporta móvil y web. En móviles el pedido se muestra en un
 Los colores, espaciados y radios provienen de las extensiones de tema
 (`AppColors`, `AppSpacing`, `AppRadius`).
 
+## Frontend / KDS (Cocina)
+
+Pantalla que muestra la cola de comandas y permite avanzar su estado en tiempo real.
+
+### Diseño de columnas/tabs, cronómetro y SLA
+
+- Lanes: **Pendientes**, **En preparación** y **Listas** (las servidas pueden mostrarse como historial).
+- Cada `ComandaCard` incluye encabezado (número, mesa, curso, prioridad), cuerpo con ítems y pie con cronómetro.
+- `TimerBadge` cambia de color según el porcentaje del SLA: <75 % éxito, 75–100 % alerta, >100 % error.
+- Nueva comanda puede generar pulso/sonido según configuración de estación.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/comandas` | Listar comandas (usa `kds=1` y filtros `estado`, `estacion_id`, `local_id`) |
+| POST | `/v1/comandas/{id}/start` | Marcar comanda como en preparación |
+| POST | `/v1/comandas/{id}/ready` | Marcar comanda como lista |
+| POST | `/v1/comandas/{id}/served` | Servir comanda (intenta `/served`, si no existe cae a `/bump`) |
+| POST | `/v1/comandas/{id}/bump` | Servir comanda (compatibilidad backend) |
+| GET | `/v1/kds/estaciones` | Listar estaciones KDS (opcional) |
+| GET | `/v1/kds/stream` | Stream SSE con eventos `create/start/ready/bump/recall` (opcional) |
+
+### Permisos requeridos
+
+- `kds.comandas.ver` para acceder a la pantalla.
+- `kds.start` para mostrar **Start**.
+- `kds.ready` para mostrar **Ready**.
+- `kds.bump` o `kds.served` para mostrar **Served**.
+- `kds.recall` para **Recall** (opcional).
+
+### Filtros y orden
+
+- Filtros: `estacion_id`, `estado`, `curso`, `prioridad`, `search`.
+- Orden predeterminado por `created_at`; se puede ordenar por SLA restante.
+
+### Estrategia de tiempo real
+
+- Suscripción a `/v1/kds/stream` cuando el backend lo soporta.
+- Fallback a *polling* cada 3–5 s para cambios incrementales.
+
+### Responsive + tokens de tema
+
+- Mismo código soporta móvil (tabs) y web (tres columnas).
+- Todos los colores, espaciados y radios provienen de `AppColors`, `AppSpacing` y `AppRadius`.
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).
