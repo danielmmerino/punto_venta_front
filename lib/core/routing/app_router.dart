@@ -11,6 +11,7 @@ import '../../features/auth/ui/login_page.dart';
 import '../../features/dashboard/ui/dashboard_page.dart';
 import '../../features/_placeholders_/selector_local_page.dart';
 import '../../features/products/ui/products_page.dart';
+import '../../features/invoices/ui/invoice_detail_page.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -53,6 +54,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/productos',
         builder: (context, state) => const ProductsPage(),
+      ),
+      GoRoute(
+        path: '/facturas/:id',
+        builder: (context, state) {
+          final id = int.parse(state.params['id']!);
+          return InvoiceDetailPage(id: id);
+        },
       ),
     ],
     redirect: (context, state) {
