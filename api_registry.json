@@ -66,4 +66,11 @@
     ,{"method":"GET","path":"/v1/stock","name":"Consultar stock","module":"inventario","permission":"inventario.stock.ver"}
     ,{"method":"POST","path":"/v1/inventario/ajuste","name":"Crear ajuste de inventario","module":"inventario","permission":"inventario.ajustes.crear"}
     ,{"method":"POST","path":"/v1/inventario/traspaso","name":"Crear traspaso entre bodegas","module":"inventario","permission":"inventario.traspasos.crear"}
+    ,{"method":"GET","path":"/v1/compras","name":"Listar compras","module":"compras","permission":"compras.ver"},
+    {"method":"POST","path":"/v1/compras","name":"Crear compra (borrador)","module":"compras","permission":"compras.crear"},
+    {"method":"PUT","path":"/v1/compras/{id}","name":"Editar compra (borrador)","module":"compras","permission":"compras.editar"},
+    {"method":"POST","path":"/v1/compras/{id}/aprobar","name":"Aprobar compra","module":"compras","permission":"compras.aprobar"},
+    {"method":"GET","path":"/v1/cxp","name":"Listar CxP por proveedor","module":"cxp","permission":"cxp.ver"},
+    {"method":"POST","path":"/v1/pagos-proveedor","name":"Registrar pago a proveedor","module":"cxp","permission":"pagos_proveedor.crear"},
+    {"method":"GET","path":"/v1/proveedores","name":"Buscar proveedores","module":"proveedores","permission":"proveedores.ver"}
 ]

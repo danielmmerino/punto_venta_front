@@ -575,6 +575,86 @@ Tabs **Ajuste** | **Traspaso**.
 { "traspaso_id": 5 }
 ```
 
+
+## Frontend / Compras
+
+Pantalla responsive para registrar compras a proveedores. Usa interceptores `Authorization` y `X-Local-Id` en todas las peticiones.
+
+### Flujo
+
+1. Lista con filtros por estado, proveedor y fecha.
+2. Formulario de compra en borrador con proveedor, fecha, bodega destino e ítems.
+3. Se puede editar el borrador y guardarlo.
+4. Al aprobar (`POST /v1/compras/{id}/aprobar`) la mercadería entra al inventario y se genera una CxP.
+
+### Validaciones
+
+- Proveedor, bodega y fecha requeridos.
+- Al menos una línea con cantidad > 0 y costo ≥ 0.
+- No se puede aprobar si no hay líneas.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/compras` | Listar compras |
+| POST | `/v1/compras` | Crear compra (borrador) |
+| PUT | `/v1/compras/{id}` | Editar compra (borrador) |
+| POST | `/v1/compras/{id}/aprobar` | Aprobar compra |
+| GET | `/v1/proveedores?search=` | Autocompletar proveedor |
+| GET | `/v1/bodegas?local_id=…` | Bodega destino |
+| GET | `/v1/productos?search=&activo=` | Autocomplete de ítems |
+
+#### Ejemplo
+
+```json
+// POST /v1/compras
+{
+  "proveedor_id": 321,
+  "bodega_id": 10,
+  "fecha": "2025-08-18",
+  "items":[{"producto_id":501,"cantidad":10,"costo":3.20,"impuesto_id":1}]
+}
+```
+
+## Frontend / CxP y Pagos a Proveedor
+
+Módulo para consultar cuentas por pagar y registrar abonos a proveedores.
+
+### Flujo
+
+1. Filtros por proveedor, estado y fecha.
+2. Tabla con documento, total, pagado y saldo.
+3. Al elegir **Registrar pago** se solicita método, monto, referencia y observaciones.
+4. El pago se envía con header `Idempotency-Key: PPR-<cxpId>-<uuid>`.
+
+### Validaciones
+
+- Monto ≥ 0.01 y ≤ saldo.
+- Método de pago requerido.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/cxp` | Listar CxP por proveedor |
+| POST | `/v1/pagos-proveedor` | Registrar pago a proveedor |
+| GET | `/v1/metodos-pago?activo=true` | Métodos de pago |
+| GET | `/v1/proveedores?search=` | Autocompletar proveedor |
+
+#### Ejemplo
+
+```json
+// POST /v1/pagos-proveedor
+{
+  "cxp_id": 88001,
+  "metodo": 1,
+  "monto": 50.00
+}
+```
+
+Permisos necesarios: `compras.ver`, `compras.crear`, `compras.editar`, `compras.aprobar`, `cxp.ver` y `pagos_proveedor.crear`.
+
 ## Guard Global
 
 El router redirige las rutas protegidas según el estado:
