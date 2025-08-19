@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/menu_drawer.dart';
 import '../controllers/products_controller.dart';
 import '../data/models/product.dart';
 import 'product_form.dart';
@@ -28,6 +29,7 @@ class ProductsPage extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('Productos'),
       ),
+      drawer: const MenuDrawer(),
       body: Padding(
         padding: EdgeInsets.all(spacing.md),
         child: Column(

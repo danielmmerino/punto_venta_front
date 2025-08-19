@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../bodegas/ui/bodegas_page.dart';
 import '../stock/ui/stock_page.dart';
+import '../../../core/ui/menu_drawer.dart';
 
 class InventoryPage extends StatelessWidget {
   const InventoryPage({super.key});
@@ -20,6 +21,7 @@ class InventoryPage extends StatelessWidget {
             ],
           ),
         ),
+        drawer: const MenuDrawer(),
         body: const TabBarView(
           children: [
             BodegasPage(),

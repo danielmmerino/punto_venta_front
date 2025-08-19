@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/menu_drawer.dart';
 import '../controllers/dashboard_controller.dart';
 import 'widgets/kpi_card.dart';
 import 'widgets/alert_banner.dart';
@@ -109,6 +110,7 @@ class DashboardPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Dashboard')),
+      drawer: const MenuDrawer(),
       body: content,
     );
   }
