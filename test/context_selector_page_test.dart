@@ -20,10 +20,10 @@ class DummyController extends ContextController {
 
 void main() {
   testWidgets('grid adapts to narrow width', (tester) async {
-    tester.binding.window.physicalSizeTestValue = const Size(360, 800);
-    tester.binding.window.devicePixelRatioTestValue = 1.0;
-    addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
-    addTearDown(tester.binding.window.clearDevicePixelRatioTestValue);
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(ProviderScope(
       overrides: [
         contextControllerProvider.overrideWith((ref) => DummyController(
@@ -32,6 +32,7 @@ void main() {
               Local(id: 1, nombre: 'A', empresaId: 1),
               Local(id: 2, nombre: 'B', empresaId: 1)
             ]))),
+      ],
       child: const MaterialApp(home: ContextSelectorPage()),
     ));
     await tester.pumpAndSettle();
@@ -41,10 +42,10 @@ void main() {
   });
 
   testWidgets('grid adapts to wide width', (tester) async {
-    tester.binding.window.physicalSizeTestValue = const Size(1024, 800);
-    tester.binding.window.devicePixelRatioTestValue = 1.0;
-    addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
-    addTearDown(tester.binding.window.clearDevicePixelRatioTestValue);
+    tester.view.physicalSize = const Size(1024, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     await tester.pumpWidget(ProviderScope(
       overrides: [
         contextControllerProvider.overrideWith((ref) => DummyController(
@@ -53,6 +54,7 @@ void main() {
               Local(id: 1, nombre: 'A', empresaId: 1),
               Local(id: 2, nombre: 'B', empresaId: 1)
             ]))),
+      ],
       child: const MaterialApp(home: ContextSelectorPage()),
     ));
     await tester.pumpAndSettle();
