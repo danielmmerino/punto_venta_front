@@ -81,7 +81,11 @@ class DashboardRepository {
     }
     final resp = await _dio.get('/v1/estado-suscripcion',
         queryParameters: {'local_id': localId});
-    final sub = SubscriptionInfo.fromJson(resp.data as Map<String, dynamic>);
+    final data = resp.data is Map<String, dynamic> &&
+            resp.data.containsKey('data')
+        ? resp.data['data'] as Map<String, dynamic>
+        : resp.data as Map<String, dynamic>;
+    final sub = SubscriptionInfo.fromJson(data);
     _cachedSub = sub;
     _cachedAt = now;
     return sub;

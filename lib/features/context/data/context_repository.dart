@@ -37,11 +37,19 @@ class ContextRepository {
     try {
       final resp = await _dio.get('/v1/estado-suscripcion',
           queryParameters: localId != null ? {'local_id': localId} : null);
-      return SubscriptionStatus.fromJson(resp.data as Map<String, dynamic>);
+      final data = resp.data is Map<String, dynamic> &&
+              resp.data.containsKey('data')
+          ? resp.data['data'] as Map<String, dynamic>
+          : resp.data as Map<String, dynamic>;
+      return SubscriptionStatus.fromJson(data);
     } on DioException catch (e) {
       if (e.response?.statusCode == 400 || e.response?.statusCode == 404) {
         final resp = await _dio.get('/v1/estado-suscripcion');
-        return SubscriptionStatus.fromJson(resp.data as Map<String, dynamic>);
+        final data = resp.data is Map<String, dynamic> &&
+                resp.data.containsKey('data')
+            ? resp.data['data'] as Map<String, dynamic>
+            : resp.data as Map<String, dynamic>;
+        return SubscriptionStatus.fromJson(data);
       }
       rethrow;
     }
