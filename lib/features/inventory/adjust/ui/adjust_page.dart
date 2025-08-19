@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,7 +23,8 @@ class AdjustPage extends HookConsumerWidget {
     final motivoCtrl = useTextEditingController();
 
     useEffect(() {
-      ref.read(bodegasControllerProvider.notifier).load();
+      Future.microtask(
+          () => ref.read(bodegasControllerProvider.notifier).load());
       return null;
     }, const []);
 

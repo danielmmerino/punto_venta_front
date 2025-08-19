@@ -26,7 +26,8 @@ class StockPage extends HookConsumerWidget {
     final debounce = useRef<Timer?>(null);
 
     useEffect(() {
-      ref.read(bodegasControllerProvider.notifier).load();
+      Future.microtask(
+          () => ref.read(bodegasControllerProvider.notifier).load());
       return null;
     }, const []);
 
