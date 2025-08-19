@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/routing/app_router.dart';
 import '../data/context_repository.dart';
 import '../data/local.dart';
-import '../data/subscription_status.dart';
 
 class ContextState {
   const ContextState({
