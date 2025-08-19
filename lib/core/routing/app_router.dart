@@ -8,6 +8,7 @@ import '../../data/auth/auth_state.dart';
 import '../../data/subscription/subscription_repository.dart';
 import '../../features/_placeholders_/subscription_blocked_page.dart';
 import '../../features/auth/ui/login_page.dart';
+import '../../features/auth/ui/change_password_page.dart';
 import '../../features/dashboard/ui/dashboard_page.dart';
 import '../../features/_placeholders_/selector_local_page.dart';
 import '../../features/products/ui/products_page.dart';
@@ -45,6 +46,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/change-password',
+        builder: (context, state) => const ChangePasswordPage(),
       ),
       GoRoute(
         path: '/dashboard',

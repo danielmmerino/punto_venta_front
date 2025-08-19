@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../../data/auth/auth_repository.dart';
 
 /// Drawer used across the app to navigate between available screens.
-class MenuDrawer extends StatelessWidget {
+class MenuDrawer extends ConsumerWidget {
   const MenuDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       child: ListView(
         children: [
@@ -30,6 +33,23 @@ class MenuDrawer extends StatelessWidget {
             leading: const Icon(Icons.shopping_cart),
             title: const Text('Productos'),
             onTap: () => context.go('/productos'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.lock),
+            title: const Text('Cambiar contraseña'),
+            onTap: () {
+              Navigator.pop(context);
+              context.go('/change-password');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Cerrar sesión'),
+            onTap: () async {
+              Navigator.pop(context);
+              await ref.read(authStateProvider.notifier).logout();
+              context.go('/login');
+            },
           ),
         ],
       ),

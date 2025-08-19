@@ -121,6 +121,17 @@ class AuthRepository {
     await _storage.write(key: _expiresKey, value: expiresAt.toIso8601String());
   }
 
+  Future<void> changePassword(
+      String currentPassword, String newPassword) async {
+    final token = await getToken();
+    await _dio.post('/v1/auth/change-password',
+        data: {
+          'current_password': currentPassword,
+          'new_password': newPassword,
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+  }
+
   Future<void> logout() async {
     await _storage.delete(key: _tokenKey);
     await _storage.delete(key: _expiresKey);
