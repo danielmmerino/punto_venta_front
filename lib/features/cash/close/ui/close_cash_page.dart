@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../controllers/close_cash_controller.dart';
-import '../../common/cash_repository.dart';
 import 'method_count_row.dart';
 import 'totals_footer.dart';
 
@@ -32,7 +31,7 @@ class CloseCashPage extends ConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: TotalsFooter(),
+            child: const TotalsFooter(),
           )
         ],
       ),
