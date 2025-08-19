@@ -76,7 +76,10 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final auth = ref.read(authStateProvider);
       final subRepo = ref.read(subscriptionRepositoryProvider);
-      final location = state.matchedLocation;
+      // Using the state's URI path prevents issues when query parameters or
+      // trailing slashes are present, ensuring redirection works consistently
+      // after a successful login.
+      final location = state.uri.path;
       if (location == '/subscription/blocked') {
         return null;
       }
