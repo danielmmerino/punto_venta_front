@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/network/dio_client.dart';
 import 'models/stock_item.dart';
-import '../../../../products/data/models/product.dart';
-import '../../../../products/data/products_repository.dart';
+import '../../../products/data/models/product.dart';
+import '../../../products/data/products_repository.dart';
 
 final stockRepositoryProvider = Provider<StockRepository>((ref) {
   final dio = ref.read(dioProvider);
