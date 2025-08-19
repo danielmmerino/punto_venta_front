@@ -1,76 +1,569 @@
 [
-  {"method":"GET","path":"/v1/tenancy/context","name":"Contexto tenancy","module":"tenancy","permission":"tenancy.context.ver"},
-  {"method":"GET","path":"/v1/locales","name":"Listar locales del usuario (mine=1)","module":"locales","permission":"locales.ver"},
-  {"method":"GET","path":"/v1/estado-suscripcion","name":"Estado de suscripción (por empresa/local)","module":"suscripciones","permission":"suscripciones.ver"},
-  {"method":"GET","path":"/v1/reportes/ventas-dia","name":"Ventas por hora","module":"reportes","permission":"reportes.ventas.ver"},
-  {"method":"GET","path":"/v1/reportes/productos-mas-vendidos","name":"Top productos","module":"reportes","permission":"reportes.productos.ver"},
-  {"method":"GET","path":"/v1/caja/estado","name":"Estado/resumen de caja","module":"caja","permission":"caja.ver"},
-  {"method":"POST","path":"/v1/caja/cierre","name":"Cerrar caja","module":"caja","permission":"caja.cierre.crear"},
-  {"method":"GET","path":"/v1/usuarios","name":"Listar usuarios","module":"usuarios","permission":"usuarios.ver"},
-  {"method":"POST","path":"/v1/usuarios","name":"Crear usuario","module":"usuarios","permission":"usuarios.crear"},
-  {"method":"PUT","path":"/v1/usuarios/{id}","name":"Editar usuario","module":"usuarios","permission":"usuarios.editar"},
-  {"method":"DELETE","path":"/v1/usuarios/{id}","name":"Eliminar usuario","module":"usuarios","permission":"usuarios.eliminar"},
-  {"method":"POST","path":"/v1/usuarios/{id}/roles","name":"Asignar roles a usuario","module":"usuarios","permission":"roles.editar"},
-  {"method":"GET","path":"/v1/roles","name":"Listar roles","module":"usuarios","permission":"roles.ver"},
-  {"method":"GET","path":"/v1/permisos","name":"Listar permisos","module":"usuarios","permission":"permisos.ver"},
-  {"method": "GET", "path": "/v1/unidades", "name": "Listar unidades", "module": "unidades", "permission": "unidades.ver"},
-  {"method": "POST", "path": "/v1/unidades", "name": "Crear unidad", "module": "unidades", "permission": "unidades.crear"},
-  {"method": "PUT", "path": "/v1/unidades/{id}", "name": "Editar unidad", "module": "unidades", "permission": "unidades.editar"},
-  {"method": "DELETE", "path": "/v1/unidades/{id}", "name": "Eliminar unidad", "module": "unidades", "permission": "unidades.eliminar"},
-  {"method": "GET", "path": "/v1/categorias", "name": "Listar categorías", "module": "categorias", "permission": "categorias.ver"},
-  {"method": "POST", "path": "/v1/categorias", "name": "Crear categoría", "module": "categorias", "permission": "categorias.crear"},
-  {"method": "PUT", "path": "/v1/categorias/{id}", "name": "Editar categoría", "module": "categorias", "permission": "categorias.editar"},
-  {"method": "DELETE", "path": "/v1/categorias/{id}", "name": "Eliminar categoría", "module": "categorias", "permission": "categorias.eliminar"},
-  {"method":"GET","path":"/v1/productos","name":"Listar productos","module":"productos","permission":"productos.ver"},
-  {"method":"POST","path":"/v1/productos","name":"Crear producto","module":"productos","permission":"productos.crear"},
-  {"method":"PUT","path":"/v1/productos/{id}","name":"Editar producto","module":"productos","permission":"productos.editar"},
-  {"method":"DELETE","path":"/v1/productos/{id}","name":"Eliminar producto","module":"productos","permission":"productos.eliminar"},
-  {"method":"POST","path":"/v1/productos/import","name":"Importar productos","module":"productos","permission":"productos.import"},
-  {"method":"GET","path":"/v1/productos/{id}/receta","name":"Obtener receta de producto","module":"productos","permission":"productos.recetas.ver"},
-  {"method":"POST","path":"/v1/productos/{id}/receta","name":"Guardar receta de producto","module":"productos","permission":"productos.recetas.editar"},
-  {"method":"DELETE","path":"/v1/productos/{id}/receta/{insumo_id}","name":"Eliminar línea de receta","module":"productos","permission":"productos.recetas.editar"},
-  {"method":"GET","path":"/v1/productos","name":"Buscar insumos (tipo=insumo)","module":"productos","permission":"productos.ver"},
-  {"method":"GET","path":"/v1/unidades","name":"Listar unidades (vista)","module":"unidades","permission":"unidades.ver"},
-  {"method":"GET","path":"/v1/mesas","name":"Listar mesas","module":"mesas","permission":"mesas.ver"},
-  {"method":"POST","path":"/v1/mesas","name":"Crear mesa","module":"mesas","permission":"mesas.crear"},
-  {"method":"PUT","path":"/v1/mesas/{id}","name":"Editar mesa","module":"mesas","permission":"mesas.editar"},
-  {"method":"DELETE","path":"/v1/mesas/{id}","name":"Eliminar mesa","module":"mesas","permission":"mesas.eliminar"},
-    {"method":"GET","path":"/v1/mesas/estado","name":"Estados de mesas (batch)","module":"mesas","permission":"mesas.ver"},
-    {"method":"POST","path":"/v1/pedidos","name":"Crear pedido","module":"pedidos","permission":"pedidos.crear"},
-    {"method":"GET","path":"/v1/pedidos","name":"Buscar pedido abierto por mesa","module":"pedidos","permission":"pedidos.ver"},
-    {"method":"GET","path":"/v1/pedidos/{id}","name":"Detalle de pedido","module":"pedidos","permission":"pedidos.ver"},
-    {"method":"POST","path":"/v1/pedidos/{id}/items","name":"Agregar ítem","module":"pedidos","permission":"pedidos.items.crear"},
-    {"method":"PUT","path":"/v1/pedidos/{id}/items/{item_id}","name":"Editar ítem","module":"pedidos","permission":"pedidos.items.editar"},
-    {"method":"DELETE","path":"/v1/pedidos/{id}/items/{item_id}","name":"Eliminar ítem","module":"pedidos","permission":"pedidos.items.eliminar"},
-    {"method":"POST","path":"/v1/pedidos/{id}/enviar-cocina","name":"Enviar a cocina","module":"kds","permission":"pedidos.enviar_cocina"},
-    {"method":"GET","path":"/v1/productos","name":"Catálogo de productos","module":"productos","permission":"productos.ver"},
-    {"method":"GET","path":"/v1/comandas","name":"Listar comandas","module":"kds","permission":"kds.comandas.ver"},
-    {"method":"POST","path":"/v1/comandas/{id}/start","name":"Start comanda","module":"kds","permission":"kds.start"},
-    {"method":"POST","path":"/v1/comandas/{id}/ready","name":"Ready comanda","module":"kds","permission":"kds.ready"},
-    {"method":"POST","path":"/v1/comandas/{id}/served","name":"Servir comanda","module":"kds","permission":"kds.bump"},
-    {"method":"POST","path":"/v1/comandas/{id}/bump","name":"Servir comanda (compat)","module":"kds","permission":"kds.bump"},
-    {"method":"GET","path":"/v1/kds/estaciones","name":"Listar estaciones KDS","module":"kds","permission":"kds.estaciones.ver"},
-    {"method":"GET","path":"/v1/kds/stream","name":"Stream KDS (SSE)","module":"kds","permission":"kds.stream.ver"},
-    {"method":"GET","path":"/v1/productos","name":"Buscar productos (q=)","module":"productos","permission":"productos.ver"},
-    {"method":"POST","path":"/v1/pedidos/{id}/split","name":"Dividir pedido en cuentas","module":"pedidos","permission":"pedidos.split"},
-    {"method":"GET","path":"/v1/cuentas","name":"Listar cuentas por pedido","module":"cuentas","permission":"cuentas.ver"},
-    {"method":"POST","path":"/v1/facturas","name":"Crear factura (por cuenta_id)","module":"ventas","permission":"facturas.crear"},
-    {"method":"POST","path":"/v1/pagos-venta","name":"Registrar pago de venta","module":"ventas","permission":"ventas.pagos.crear"},
-    {"method":"GET","path":"/v1/metodos-pago","name":"Listar métodos de pago","module":"metodos_pago","permission":"metodos_pago.ver"}
-    ,{"method":"POST","path":"/v1/facturas/{id}/anular","name":"Anular factura (genera NC)","module":"facturas","permission":"facturas.anular"}
-    ,{"method":"GET","path":"/v1/ventas/notas-credito","name":"Listar Notas de Crédito","module":"notas_credito","permission":"notas_credito.ver"}
-    ,{"method":"GET","path":"/v1/bodegas","name":"Listar bodegas","module":"inventario","permission":"bodegas.ver"}
-    ,{"method":"POST","path":"/v1/bodegas","name":"Crear bodega","module":"inventario","permission":"bodegas.crear"}
-    ,{"method":"PUT","path":"/v1/bodegas/{id}","name":"Editar bodega","module":"inventario","permission":"bodegas.editar"}
-    ,{"method":"DELETE","path":"/v1/bodegas/{id}","name":"Eliminar bodega","module":"inventario","permission":"bodegas.eliminar"}
-    ,{"method":"GET","path":"/v1/stock","name":"Consultar stock","module":"inventario","permission":"inventario.stock.ver"}
-    ,{"method":"POST","path":"/v1/inventario/ajuste","name":"Crear ajuste de inventario","module":"inventario","permission":"inventario.ajustes.crear"}
-    ,{"method":"POST","path":"/v1/inventario/traspaso","name":"Crear traspaso entre bodegas","module":"inventario","permission":"inventario.traspasos.crear"}
-    ,{"method":"GET","path":"/v1/compras","name":"Listar compras","module":"compras","permission":"compras.ver"},
-    {"method":"POST","path":"/v1/compras","name":"Crear compra (borrador)","module":"compras","permission":"compras.crear"},
-    {"method":"PUT","path":"/v1/compras/{id}","name":"Editar compra (borrador)","module":"compras","permission":"compras.editar"},
-    {"method":"POST","path":"/v1/compras/{id}/aprobar","name":"Aprobar compra","module":"compras","permission":"compras.aprobar"},
-    {"method":"GET","path":"/v1/cxp","name":"Listar CxP por proveedor","module":"cxp","permission":"cxp.ver"},
-    {"method":"POST","path":"/v1/pagos-proveedor","name":"Registrar pago a proveedor","module":"cxp","permission":"pagos_proveedor.crear"},
-    {"method":"GET","path":"/v1/proveedores","name":"Buscar proveedores","module":"proveedores","permission":"proveedores.ver"}
+  {
+    "method": "GET",
+    "path": "/v1/tenancy/context",
+    "name": "Contexto tenancy",
+    "module": "tenancy",
+    "permission": "tenancy.context.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/locales",
+    "name": "Listar locales del usuario (mine=1)",
+    "module": "locales",
+    "permission": "locales.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/estado-suscripcion",
+    "name": "Estado de suscripci\u00f3n (por empresa/local)",
+    "module": "suscripciones",
+    "permission": "suscripciones.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/reportes/ventas-dia",
+    "name": "Ventas por hora",
+    "module": "reportes",
+    "permission": "reportes.ventas.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/reportes/productos-mas-vendidos",
+    "name": "Top productos",
+    "module": "reportes",
+    "permission": "reportes.productos.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/caja/estado",
+    "name": "Estado/resumen de caja",
+    "module": "caja",
+    "permission": "caja.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/caja/cierre",
+    "name": "Cerrar caja",
+    "module": "caja",
+    "permission": "caja.cierre.crear"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/usuarios",
+    "name": "Listar usuarios",
+    "module": "usuarios",
+    "permission": "usuarios.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/usuarios",
+    "name": "Crear usuario",
+    "module": "usuarios",
+    "permission": "usuarios.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/usuarios/{id}",
+    "name": "Editar usuario",
+    "module": "usuarios",
+    "permission": "usuarios.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/usuarios/{id}",
+    "name": "Eliminar usuario",
+    "module": "usuarios",
+    "permission": "usuarios.eliminar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/usuarios/{id}/roles",
+    "name": "Asignar roles a usuario",
+    "module": "usuarios",
+    "permission": "roles.editar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/roles",
+    "name": "Listar roles",
+    "module": "usuarios",
+    "permission": "roles.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/permisos",
+    "name": "Listar permisos",
+    "module": "usuarios",
+    "permission": "permisos.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/unidades",
+    "name": "Listar unidades",
+    "module": "unidades",
+    "permission": "unidades.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/unidades",
+    "name": "Crear unidad",
+    "module": "unidades",
+    "permission": "unidades.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/unidades/{id}",
+    "name": "Editar unidad",
+    "module": "unidades",
+    "permission": "unidades.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/unidades/{id}",
+    "name": "Eliminar unidad",
+    "module": "unidades",
+    "permission": "unidades.eliminar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/categorias",
+    "name": "Listar categor\u00edas",
+    "module": "categorias",
+    "permission": "categorias.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/categorias",
+    "name": "Crear categor\u00eda",
+    "module": "categorias",
+    "permission": "categorias.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/categorias/{id}",
+    "name": "Editar categor\u00eda",
+    "module": "categorias",
+    "permission": "categorias.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/categorias/{id}",
+    "name": "Eliminar categor\u00eda",
+    "module": "categorias",
+    "permission": "categorias.eliminar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/productos",
+    "name": "Listar productos",
+    "module": "productos",
+    "permission": "productos.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/productos",
+    "name": "Crear producto",
+    "module": "productos",
+    "permission": "productos.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/productos/{id}",
+    "name": "Editar producto",
+    "module": "productos",
+    "permission": "productos.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/productos/{id}",
+    "name": "Eliminar producto",
+    "module": "productos",
+    "permission": "productos.eliminar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/productos/import",
+    "name": "Importar productos",
+    "module": "productos",
+    "permission": "productos.import"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/productos/{id}/receta",
+    "name": "Obtener receta de producto",
+    "module": "productos",
+    "permission": "productos.recetas.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/productos/{id}/receta",
+    "name": "Guardar receta de producto",
+    "module": "productos",
+    "permission": "productos.recetas.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/productos/{id}/receta/{insumo_id}",
+    "name": "Eliminar l\u00ednea de receta",
+    "module": "productos",
+    "permission": "productos.recetas.editar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/productos",
+    "name": "Buscar insumos (tipo=insumo)",
+    "module": "productos",
+    "permission": "productos.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/unidades",
+    "name": "Listar unidades (vista)",
+    "module": "unidades",
+    "permission": "unidades.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/mesas",
+    "name": "Listar mesas",
+    "module": "mesas",
+    "permission": "mesas.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/mesas",
+    "name": "Crear mesa",
+    "module": "mesas",
+    "permission": "mesas.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/mesas/{id}",
+    "name": "Editar mesa",
+    "module": "mesas",
+    "permission": "mesas.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/mesas/{id}",
+    "name": "Eliminar mesa",
+    "module": "mesas",
+    "permission": "mesas.eliminar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/mesas/estado",
+    "name": "Estados de mesas (batch)",
+    "module": "mesas",
+    "permission": "mesas.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/pedidos",
+    "name": "Crear pedido",
+    "module": "pedidos",
+    "permission": "pedidos.crear"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/pedidos",
+    "name": "Buscar pedido abierto por mesa",
+    "module": "pedidos",
+    "permission": "pedidos.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/pedidos/{id}",
+    "name": "Detalle de pedido",
+    "module": "pedidos",
+    "permission": "pedidos.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/pedidos/{id}/items",
+    "name": "Agregar \u00edtem",
+    "module": "pedidos",
+    "permission": "pedidos.items.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/pedidos/{id}/items/{item_id}",
+    "name": "Editar \u00edtem",
+    "module": "pedidos",
+    "permission": "pedidos.items.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/pedidos/{id}/items/{item_id}",
+    "name": "Eliminar \u00edtem",
+    "module": "pedidos",
+    "permission": "pedidos.items.eliminar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/pedidos/{id}/enviar-cocina",
+    "name": "Enviar a cocina",
+    "module": "kds",
+    "permission": "pedidos.enviar_cocina"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/productos",
+    "name": "Cat\u00e1logo de productos",
+    "module": "productos",
+    "permission": "productos.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/comandas",
+    "name": "Listar comandas",
+    "module": "kds",
+    "permission": "kds.comandas.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/comandas/{id}/start",
+    "name": "Start comanda",
+    "module": "kds",
+    "permission": "kds.start"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/comandas/{id}/ready",
+    "name": "Ready comanda",
+    "module": "kds",
+    "permission": "kds.ready"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/comandas/{id}/served",
+    "name": "Servir comanda",
+    "module": "kds",
+    "permission": "kds.bump"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/comandas/{id}/bump",
+    "name": "Servir comanda (compat)",
+    "module": "kds",
+    "permission": "kds.bump"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/kds/estaciones",
+    "name": "Listar estaciones KDS",
+    "module": "kds",
+    "permission": "kds.estaciones.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/kds/stream",
+    "name": "Stream KDS (SSE)",
+    "module": "kds",
+    "permission": "kds.stream.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/productos",
+    "name": "Buscar productos (q=)",
+    "module": "productos",
+    "permission": "productos.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/pedidos/{id}/split",
+    "name": "Dividir pedido en cuentas",
+    "module": "pedidos",
+    "permission": "pedidos.split"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/cuentas",
+    "name": "Listar cuentas por pedido",
+    "module": "cuentas",
+    "permission": "cuentas.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/facturas",
+    "name": "Crear factura (por cuenta_id)",
+    "module": "ventas",
+    "permission": "facturas.crear"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/pagos-venta",
+    "name": "Registrar pago de venta",
+    "module": "ventas",
+    "permission": "ventas.pagos.crear"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/metodos-pago",
+    "name": "Listar m\u00e9todos de pago",
+    "module": "metodos_pago",
+    "permission": "metodos_pago.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/facturas/{id}/anular",
+    "name": "Anular factura (genera NC)",
+    "module": "facturas",
+    "permission": "facturas.anular"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/ventas/notas-credito",
+    "name": "Listar Notas de Cr\u00e9dito",
+    "module": "notas_credito",
+    "permission": "notas_credito.ver"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/bodegas",
+    "name": "Listar bodegas",
+    "module": "inventario",
+    "permission": "bodegas.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/bodegas",
+    "name": "Crear bodega",
+    "module": "inventario",
+    "permission": "bodegas.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/bodegas/{id}",
+    "name": "Editar bodega",
+    "module": "inventario",
+    "permission": "bodegas.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/bodegas/{id}",
+    "name": "Eliminar bodega",
+    "module": "inventario",
+    "permission": "bodegas.eliminar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/stock",
+    "name": "Consultar stock",
+    "module": "inventario",
+    "permission": "inventario.stock.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/inventario/ajuste",
+    "name": "Crear ajuste de inventario",
+    "module": "inventario",
+    "permission": "inventario.ajustes.crear"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/inventario/traspaso",
+    "name": "Crear traspaso entre bodegas",
+    "module": "inventario",
+    "permission": "inventario.traspasos.crear"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/compras",
+    "name": "Listar compras",
+    "module": "compras",
+    "permission": "compras.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/compras",
+    "name": "Crear compra (borrador)",
+    "module": "compras",
+    "permission": "compras.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/compras/{id}",
+    "name": "Editar compra (borrador)",
+    "module": "compras",
+    "permission": "compras.editar"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/compras/{id}/aprobar",
+    "name": "Aprobar compra",
+    "module": "compras",
+    "permission": "compras.aprobar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/cxp",
+    "name": "Listar CxP por proveedor",
+    "module": "cxp",
+    "permission": "cxp.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/pagos-proveedor",
+    "name": "Registrar pago a proveedor",
+    "module": "cxp",
+    "permission": "pagos_proveedor.crear"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/clientes",
+    "name": "Listar clientes",
+    "module": "crm",
+    "permission": "clientes.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/clientes",
+    "name": "Crear cliente",
+    "module": "crm",
+    "permission": "clientes.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/clientes/{id}",
+    "name": "Editar cliente",
+    "module": "crm",
+    "permission": "clientes.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/clientes/{id}",
+    "name": "Eliminar cliente",
+    "module": "crm",
+    "permission": "clientes.eliminar"
+  },
+  {
+    "method": "GET",
+    "path": "/v1/proveedores",
+    "name": "Listar proveedores",
+    "module": "proveedores",
+    "permission": "proveedores.ver"
+  },
+  {
+    "method": "POST",
+    "path": "/v1/proveedores",
+    "name": "Crear proveedor",
+    "module": "proveedores",
+    "permission": "proveedores.crear"
+  },
+  {
+    "method": "PUT",
+    "path": "/v1/proveedores/{id}",
+    "name": "Editar proveedor",
+    "module": "proveedores",
+    "permission": "proveedores.editar"
+  },
+  {
+    "method": "DELETE",
+    "path": "/v1/proveedores/{id}",
+    "name": "Eliminar proveedor",
+    "module": "proveedores",
+    "permission": "proveedores.eliminar"
+  }
 ]
