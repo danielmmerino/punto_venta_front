@@ -97,6 +97,40 @@ Todas las fechas se calculan con zona horaria `America/Guayaquil` para cortes di
 
 La interfaz es responsive y utiliza los mismos componentes en móvil y web.
 
+## Frontend / Usuarios y Roles
+
+Módulo administrativo para gestionar usuarios del local actual y sus roles. Disponible solo para perfiles con permisos adecuados.
+
+### Flujo
+
+1. Al ingresar se cargan `GET /v1/roles` y `GET /v1/usuarios` filtrando por local mediante el header `X-Local-Id`.
+2. Crear usuario envía `POST /v1/usuarios`; al recibir **201** se refresca la lista.
+3. Editar usuario usa `PUT /v1/usuarios/{id}`.
+4. Eliminar usuario realiza `DELETE /v1/usuarios/{id}`.
+5. La asignación de roles se realiza con `POST /v1/usuarios/{id}/roles`.
+
+### Validaciones y errores
+
+- El email debe ser único por empresa; la respuesta **422** con `details.email` se muestra en el formulario.
+- Las acciones y la visibilidad de botones dependen de los permisos RBAC (`usuarios.*`, `roles.*`, `permisos.*`).
+- Respuestas **401** o **403** redirigen al login o bloquean la UI según corresponda.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/usuarios` | Listar usuarios |
+| POST | `/v1/usuarios` | Crear usuario |
+| PUT | `/v1/usuarios/{id}` | Editar usuario |
+| DELETE | `/v1/usuarios/{id}` | Eliminar usuario |
+| POST | `/v1/usuarios/{id}/roles` | Asignar roles |
+| GET | `/v1/roles` | Listar roles disponibles |
+| GET | `/v1/permisos` | Listar permisos (solo lectura) |
+
+### Responsive
+
+El listado utiliza los mismos componentes para móvil y web; en pantallas estrechas se muestra como lista y en escritorios como tabla compacta. Todos los estilos provienen de los tokens de tema (`AppColors`, `AppSpacing`, `AppRadius`).
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).

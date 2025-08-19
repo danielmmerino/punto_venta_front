@@ -1,8 +1,15 @@
 [
   {"method":"GET","path":"/v1/tenancy/context","name":"Contexto tenancy","module":"tenancy","permission":"tenancy.context.ver"},
   {"method":"GET","path":"/v1/locales","name":"Listar locales del usuario (mine=1)","module":"locales","permission":"locales.ver"},
-  {"method":"GET","path":"/v1/estado-suscripcion","name":"Estado de suscripción (por empresa/local)","module":"suscripciones","permission":"suscripciones.ver"}
-  ,{"method":"GET","path":"/v1/reportes/ventas-dia","name":"Ventas por hora","module":"reportes","permission":"reportes.ventas.ver"}
-  ,{"method":"GET","path":"/v1/reportes/productos-mas-vendidos","name":"Top productos","module":"reportes","permission":"reportes.productos.ver"}
-  ,{"method":"GET","path":"/v1/caja/estado","name":"Estado de caja por local","module":"caja","permission":"caja.ver"}
+  {"method":"GET","path":"/v1/estado-suscripcion","name":"Estado de suscripción (por empresa/local)","module":"suscripciones","permission":"suscripciones.ver"},
+  {"method":"GET","path":"/v1/reportes/ventas-dia","name":"Ventas por hora","module":"reportes","permission":"reportes.ventas.ver"},
+  {"method":"GET","path":"/v1/reportes/productos-mas-vendidos","name":"Top productos","module":"reportes","permission":"reportes.productos.ver"},
+  {"method":"GET","path":"/v1/caja/estado","name":"Estado de caja por local","module":"caja","permission":"caja.ver"},
+  {"method":"GET","path":"/v1/usuarios","name":"Listar usuarios","module":"usuarios","permission":"usuarios.ver"},
+  {"method":"POST","path":"/v1/usuarios","name":"Crear usuario","module":"usuarios","permission":"usuarios.crear"},
+  {"method":"PUT","path":"/v1/usuarios/{id}","name":"Editar usuario","module":"usuarios","permission":"usuarios.editar"},
+  {"method":"DELETE","path":"/v1/usuarios/{id}","name":"Eliminar usuario","module":"usuarios","permission":"usuarios.eliminar"},
+  {"method":"POST","path":"/v1/usuarios/{id}/roles","name":"Asignar roles a usuario","module":"usuarios","permission":"roles.editar"},
+  {"method":"GET","path":"/v1/roles","name":"Listar roles","module":"usuarios","permission":"roles.ver"},
+  {"method":"GET","path":"/v1/permisos","name":"Listar permisos","module":"usuarios","permission":"permisos.ver"}
 ]
