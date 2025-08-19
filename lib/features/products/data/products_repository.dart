@@ -50,4 +50,21 @@ class ProductsRepository {
   Future<void> importFile(Map<String, dynamic> dto) async {
     await _dio.post('/v1/productos/import', data: dto);
   }
+
+  Future<List<Product>> searchInsumos(String query) async {
+    final resp = await _dio.get(
+      '/v1/productos',
+      queryParameters: {'tipo': 'insumo', 'search': query},
+    );
+    final data = resp.data;
+    if (data is List) {
+      return data
+          .map((e) => Product.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
+    }
+    final list = data['data'] as List<dynamic>;
+    return list
+        .map((e) => Product.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
 }

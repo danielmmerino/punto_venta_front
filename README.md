@@ -192,6 +192,36 @@ Módulo para administrar productos del punto de venta.
 3. Crear, editar, activar/desactivar y eliminar un producto.
 4. Usar el campo de búsqueda para filtrar por nombre o código.
 
+## Frontend / Receta/BOM del producto
+
+Pantalla para gestionar los insumos de un producto. Permite ver, añadir, editar y eliminar líneas de receta.
+
+### Flujo de trabajo
+
+1. Al cargar la pantalla se consulta `GET /v1/productos/{id}/receta`.
+2. "Añadir insumo" abre un diálogo con búsqueda de insumos (`GET /v1/productos?tipo=insumo&search=`) y campos `Cantidad` y `Merma %`.
+3. Se validan `cantidad > 0`, `merma %` entre 0 y 100 y se bloquean duplicados de insumo.
+4. Guardar envía `POST /v1/productos/{id}/receta` con la lista completa.
+5. Eliminar línea ejecuta `DELETE /v1/productos/{id}/receta/{insumo_id}`.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/productos/{id}/receta` | Obtener receta del producto |
+| POST | `/v1/productos/{id}/receta` | Guardar receta completa |
+| DELETE | `/v1/productos/{id}/receta/{insumo_id}` | Eliminar línea específica |
+| GET | `/v1/productos?tipo=insumo&search=` | Buscar insumos para autocomplete |
+| GET | `/v1/unidades?activo=true` | Listar unidades disponibles |
+
+### Validaciones
+
+- `cantidad` debe ser mayor a 0.
+- `merma %` entre 0 y 100.
+- No se permiten insumos duplicados.
+
+La interfaz es responsive y reutiliza los tokens de tema (`AppColors`, `AppSpacing`, `AppRadius`).
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).
