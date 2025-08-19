@@ -782,6 +782,66 @@ Estados: `borrador`, `enviada`, `aceptada`, `rechazada`, `expirada`.
 
 La lista y formularios usan los mismos widgets adaptándose entre móvil y web.
 
+## Frontend / Reportes
+
+Conjunto de reportes clave con filtros unificados y exportación de datos.
+
+### Estructura y navegación
+
+- Ruta base `/reportes` con pestañas **Ventas**, **Caja**, **Inventario** y **CxP/CxC**.
+- En cada pestaña se preservan filtros y página actual.
+- Todas las fechas usan zona horaria `America/Guayaquil`.
+
+### Filtros
+
+- Encabezado común con **desde/hasta** y selector de **local**.
+- Botones: **Aplicar**, **Exportar** (CSV/XLS) y **Limpiar**.
+- Filtros adicionales por reporte, por ejemplo vendedor o método de pago.
+- Validación de rango y obligatoriedad de `local_id`.
+
+### Exportación
+
+- Preferentemente el backend soporta `?export=csv|xlsx`.
+- Si no existe, se genera el archivo en el cliente recorriendo todas las páginas.
+- Archivos nombrados `<reporte>-<YYYYMMDD>-<local>.csv|xlsx`.
+
+### Paginación
+
+- Soporte de `page/per_page` o `next_cursor`.
+- En móvil usa *infinite scroll*; en web, tabla con **Cargar más**.
+
+### Subpantallas
+
+1. **Ventas** – tarjetas con totales y tabla de facturas. Filtros por vendedor, método de pago y estado SRI. Incluye sección *Top productos*.
+2. **Caja** – resumen por método y movimientos de apertura/cierre. Filtros por operador, método y estado.
+3. **Inventario bajo** – lista de productos por debajo del mínimo con opción de generar compras. Filtros por bodega, categoría y “solo bajo mínimo”.
+4. **CxP/CxC** – pestañas internas con saldos, vencidos y tabla de documentos. Filtros por entidad, estado y rango de vencimiento.
+
+### Estados de carga
+
+- Esqueletos mientras se consultan datos, mensajes para vacíos y banners de error con reintento.
+
+### Responsive y theming
+
+- Un único código para móvil y web con layouts adaptativos.
+- Colores, espaciados y radios provienen de `ThemeExtension` (`AppColors`, `AppSpacing`, `AppRadius`).
+- Paletas editables en `assets/theme/theme.json`.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción | Parámetros |
+| ------ | ---- | ----------- | ---------- |
+| GET | `/v1/reportes/ventas-dia` | Reporte de ventas por día | `desde`, `hasta`, `local_id`, `page`, `per_page` |
+| GET | `/v1/reportes/productos-mas-vendidos` | Top productos | `desde`, `hasta`, `local_id`, `top`, `page`, `per_page` |
+| GET | `/v1/reportes/caja` | Reporte de caja | `desde`, `hasta`, `local_id`, `page`, `per_page` |
+| GET | `/v1/reportes/inventario-bajo` | Inventario bajo mínimos | `local_id`, `bodega_id`, `page`, `per_page` |
+| GET | `/v1/reportes/cxp` | Reporte CxP | `proveedor_id`, `desde`, `hasta`, `estado`, `page`, `per_page` |
+| GET | `/v1/reportes/cxc` | Reporte CxC | `cliente_id`, `desde`, `hasta`, `estado`, `page`, `per_page` |
+
+### Notas de compatibilidad
+
+- Si algún endpoint aún no existe, se usan endpoints de ventas, caja, stock o cuentas con agregación en el cliente.
+
 ## Guard Global
 
 El router redirige las rutas protegidas según el estado:
