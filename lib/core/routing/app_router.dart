@@ -28,7 +28,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
 }
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final authStateStream = ref.watch(authStateProvider.stream);
+  final authStateStream = ref.watch(authStateProvider.notifier).stream;
   return GoRouter(
     initialLocation: '/',
     refreshListenable: GoRouterRefreshStream(authStateStream),
@@ -68,7 +68,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/facturas/:id',
         builder: (context, state) {
-          final id = int.parse(state.params['id']!);
+          final id = int.parse(state.pathParameters['id']!);
           return InvoiceDetailPage(id: id);
         },
       ),
@@ -76,7 +76,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final auth = ref.read(authStateProvider);
       final subRepo = ref.read(subscriptionRepositoryProvider);
-      final location = state.subloc;
+      final location = state.matchedLocation;
       if (location == '/subscription/blocked') {
         return null;
       }
