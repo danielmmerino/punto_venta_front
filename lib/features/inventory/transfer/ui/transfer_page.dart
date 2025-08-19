@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,7 +22,8 @@ class TransferPage extends HookConsumerWidget {
     final destino = useState<Bodega?>(null);
 
     useEffect(() {
-      ref.read(bodegasControllerProvider.notifier).load();
+      Future.microtask(
+          () => ref.read(bodegasControllerProvider.notifier).load());
       return null;
     }, const []);
 
