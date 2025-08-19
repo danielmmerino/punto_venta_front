@@ -5,17 +5,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:punto_venta_front/features/auth/ui/login_page.dart';
 import 'package:punto_venta_front/features/auth/controllers/login_controller.dart';
 
-class FakeLoginController extends StateNotifier<LoginState> {
-  FakeLoginController(LoginState state) : super(state);
-  @override
-  void dispose() {}
+class FakeLoginController extends LoginController {
+  FakeLoginController(Ref ref, LoginState initialState) : super(ref) {
+    state = initialState;
+  }
 }
 
 void main() {
   testWidgets('button disabled when loading', (tester) async {
     final container = ProviderContainer(overrides: [
       loginControllerProvider.overrideWith(
-          (ref) => FakeLoginController(const LoginState(isLoading: true))),
+          (ref) => FakeLoginController(ref, const LoginState(isLoading: true))),
     ]);
     await tester.pumpWidget(ProviderScope(
       parent: container,
@@ -28,7 +28,7 @@ void main() {
   testWidgets('shows error message', (tester) async {
     final container = ProviderContainer(overrides: [
       loginControllerProvider.overrideWith(
-          (ref) => FakeLoginController(const LoginState(error: 'fail'))),
+          (ref) => FakeLoginController(ref, const LoginState(error: 'fail'))),
     ]);
     await tester.pumpWidget(ProviderScope(
       parent: container,
