@@ -62,4 +62,16 @@ void main() {
     await tester.pump();
     expect(find.text('Dashboard'), findsOneWidget);
   });
+
+  testWidgets('DashboardPage has new sale button', (tester) async {
+    await tester.pumpWidget(ProviderScope(
+      overrides: [
+        dashboardRepositoryProvider.overrideWithValue(FakeDashboardRepository()),
+        contextControllerProvider.overrideWith((ref) => FakeContextController(ref)),
+      ],
+      child: const MaterialApp(home: DashboardPage()),
+    ));
+    await tester.pump();
+    expect(find.text('Nueva venta'), findsOneWidget);
+  });
 }
