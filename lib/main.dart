@@ -23,6 +23,7 @@ class MyApp extends ConsumerWidget {
       title: 'Punto Venta',
       theme: theme,
       routerConfig: router,
+      debugShowCheckedModeBanner: false,
       locale: const Locale('es', 'EC'),
       supportedLocales: const [Locale('es', 'EC')],
       localizationsDelegates: const [
