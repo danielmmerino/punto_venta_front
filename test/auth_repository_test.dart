@@ -70,4 +70,34 @@ void main() {
     final exp = await repo.getExpiresAt();
     expect(exp!.difference(DateTime.now()).inHours, closeTo(10, 1));
   });
+
+  test('login fetches user from me when response lacks user', () async {
+    final dio = MockDio();
+    final storage = MemoryStorage();
+    final repo = AuthRepository(dio, storage);
+
+    when(() => dio.post('/v1/auth/login', data: any(named: 'data'))).thenAnswer(
+      (_) async => Response(
+        requestOptions: RequestOptions(path: '/v1/auth/login'),
+        statusCode: 200,
+        data: {
+          'token': 'abc',
+          'expires_in': 86400,
+          // no user field
+        },
+      ),
+    );
+
+    when(() => dio.get('/v1/auth/me', options: any(named: 'options'))).thenAnswer(
+      (_) async => Response(
+        requestOptions: RequestOptions(path: '/v1/auth/me'),
+        statusCode: 200,
+        data: {'id': 1, 'nombre': 'Demo', 'email': 'd@e.com'},
+      ),
+    );
+
+    final resp = await repo.login('demo', 'pw');
+    expect(resp.user, isA<User>());
+    expect(resp.user.email, 'd@e.com');
+  });
 }

@@ -85,7 +85,21 @@ class AuthRepository {
     await _storage.write(
         key: _expiresKey, value: expiresAt.toIso8601String());
 
-    final user = User.fromJson(Map<String, dynamic>.from(resp.data['user']));
+    // Some backends may omit user information on the login response.
+    // If that happens, fetch the user from the `/v1/auth/me` endpoint
+    // using the newly issued token so the app can continue without
+    // throwing a cast error.
+    User user;
+    final userData = resp.data['user'];
+    if (userData != null) {
+      user = User.fromJson(Map<String, dynamic>.from(userData));
+    } else {
+      final meResp = await _dio.get('/v1/auth/me',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      user =
+          User.fromJson(Map<String, dynamic>.from(meResp.data as Map<String, dynamic>));
+    }
+
     final locales = (resp.data['locales'] as List?)
             ?.map((e) => Local.fromJson(Map<String, dynamic>.from(e)))
             .toList() ??
