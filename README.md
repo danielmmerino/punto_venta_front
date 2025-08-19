@@ -222,6 +222,45 @@ Pantalla para gestionar los insumos de un producto. Permite ver, añadir, editar
 
 La interfaz es responsive y reutiliza los tokens de tema (`AppColors`, `AppSpacing`, `AppRadius`).
 
+## Frontend / Mesas
+
+Pantalla para gestionar las mesas del restaurante con vistas de **Mapa** y **Lista**.
+Permite crear, editar y eliminar mesas, además de mostrar su estado operativo
+(*disponible*, *reservada*, *ocupada*).
+
+### Descripción
+
+- Filtros por estado y zona, búsqueda con *debounce*.
+- Vista **Mapa** usa un grid de `MesaCard` con código, capacidad y badge de estado.
+- Vista **Lista** renderiza `ListTile` en móvil y tabla compacta en web.
+- Formularios de creación/edición en diálogo o bottom sheet según plataforma.
+
+### Estados
+
+El endpoint principal puede devolver el estado directamente. Si no:
+
+- **reservada** → `GET /v1/reservas?mesa_id={id}&estado=confirmada&desde<=now<=hasta`
+- **ocupada** → `GET /v1/cuentas?mesa_id={id}&estado=abierta`
+- **disponible** cuando ninguno aplica.
+
+### Real-time
+
+Se refrescan estados con *polling* cada 15 s. Opcionalmente se puede usar
+`GET /v1/mesas/stream?local_id=...` para SSE/WebSocket.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/mesas` | Listar mesas |
+| POST | `/v1/mesas` | Crear mesa |
+| PUT | `/v1/mesas/{id}` | Editar mesa |
+| DELETE | `/v1/mesas/{id}` | Eliminar mesa |
+| GET | `/v1/mesas/estado` | Estados de mesas en batch (opcional) |
+
+La UI es responsive y utiliza los tokens de tema (`AppColors`, `AppSpacing`,
+`AppRadius`) en móvil y web.
+
 ## Arquitectura Frontend
 
 - **Estado**: Riverpod (`hooks_riverpod`).

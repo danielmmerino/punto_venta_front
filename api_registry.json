@@ -29,5 +29,10 @@
   {"method":"POST","path":"/v1/productos/{id}/receta","name":"Guardar receta de producto","module":"productos","permission":"productos.recetas.editar"},
   {"method":"DELETE","path":"/v1/productos/{id}/receta/{insumo_id}","name":"Eliminar línea de receta","module":"productos","permission":"productos.recetas.editar"},
   {"method":"GET","path":"/v1/productos","name":"Buscar insumos (tipo=insumo)","module":"productos","permission":"productos.ver"},
-  {"method":"GET","path":"/v1/unidades","name":"Listar unidades (vista)","module":"unidades","permission":"unidades.ver"}
+  {"method":"GET","path":"/v1/unidades","name":"Listar unidades (vista)","module":"unidades","permission":"unidades.ver"},
+  {"method":"GET","path":"/v1/mesas","name":"Listar mesas","module":"mesas","permission":"mesas.ver"},
+  {"method":"POST","path":"/v1/mesas","name":"Crear mesa","module":"mesas","permission":"mesas.crear"},
+  {"method":"PUT","path":"/v1/mesas/{id}","name":"Editar mesa","module":"mesas","permission":"mesas.editar"},
+  {"method":"DELETE","path":"/v1/mesas/{id}","name":"Eliminar mesa","module":"mesas","permission":"mesas.eliminar"},
+  {"method":"GET","path":"/v1/mesas/estado","name":"Estados de mesas (batch)","module":"mesas","permission":"mesas.ver"}
 ]
