@@ -42,5 +42,12 @@
     {"method":"PUT","path":"/v1/pedidos/{id}/items/{item_id}","name":"Editar ítem","module":"pedidos","permission":"pedidos.items.editar"},
     {"method":"DELETE","path":"/v1/pedidos/{id}/items/{item_id}","name":"Eliminar ítem","module":"pedidos","permission":"pedidos.items.eliminar"},
     {"method":"POST","path":"/v1/pedidos/{id}/enviar-cocina","name":"Enviar a cocina","module":"kds","permission":"pedidos.enviar_cocina"},
-    {"method":"GET","path":"/v1/productos","name":"Catálogo de productos","module":"productos","permission":"productos.ver"}
+    {"method":"GET","path":"/v1/productos","name":"Catálogo de productos","module":"productos","permission":"productos.ver"},
+    {"method":"GET","path":"/v1/comandas","name":"Listar comandas","module":"kds","permission":"kds.comandas.ver"},
+    {"method":"POST","path":"/v1/comandas/{id}/start","name":"Start comanda","module":"kds","permission":"kds.start"},
+    {"method":"POST","path":"/v1/comandas/{id}/ready","name":"Ready comanda","module":"kds","permission":"kds.ready"},
+    {"method":"POST","path":"/v1/comandas/{id}/served","name":"Servir comanda","module":"kds","permission":"kds.bump"},
+    {"method":"POST","path":"/v1/comandas/{id}/bump","name":"Servir comanda (compat)","module":"kds","permission":"kds.bump"},
+    {"method":"GET","path":"/v1/kds/estaciones","name":"Listar estaciones KDS","module":"kds","permission":"kds.estaciones.ver"},
+    {"method":"GET","path":"/v1/kds/stream","name":"Stream KDS (SSE)","module":"kds","permission":"kds.stream.ver"}
 ]
