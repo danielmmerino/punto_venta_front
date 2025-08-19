@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../env/env.dart';
 import '../../data/auth/auth_repository.dart';
 import '../../data/subscription/subscription_repository.dart';
+import '../../features/context/controllers/context_controller.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(BaseOptions(baseUrl: Env.baseUrl));
@@ -15,6 +16,11 @@ final dioProvider = Provider<Dio>((ref) {
       final token = await authRepo.getToken();
       if (token != null) {
         options.headers['Authorization'] = 'Bearer $token';
+      }
+      final ctx = ref.read(contextControllerProvider);
+      final localId = ctx.localId;
+      if (localId != null) {
+        options.headers['X-Local-Id'] = localId.toString();
       }
       handler.next(options);
     },

@@ -41,6 +41,34 @@ flutter test
 | GET | `/v1/estado-suscripcion` | Verificación de suscripción |
 | GET | `/v1/tenancy/context` | Contexto de locales (opcional) |
 
+## Frontend / Selector de Empresa/Local
+
+Pantalla responsive para elegir el local de trabajo.
+
+### Flujo de datos
+
+1. Se consulta `GET /v1/tenancy/context` para obtener empresa, locales y estado de suscripción.
+2. Si no se reciben locales se usa `GET /v1/locales?mine=1`.
+3. Al seleccionar un local se valida su suscripción con `GET /v1/estado-suscripcion?local_id=<id>`
+   (o sin parámetro si el backend no lo soporta).
+4. Cuando la suscripción está vigente se guarda `local_id` y `empresa_id` en el `ContextController`,
+   se persiste el `local_id` opcionalmente y se configura el header `X-Local-Id` para todas las
+   peticiones posteriores.
+5. Navegación a `/dashboard`. Si la suscripción no está activa se redirige a `/subscription/blocked`.
+
+### Responsive
+
+El listado usa un `GridView` adaptable (`SliverGridDelegateWithMaxCrossAxisExtent`) que muestra una columna en móviles y varias
+columnas en pantallas anchas.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/tenancy/context` | Obtiene empresa y locales del usuario |
+| GET | `/v1/locales?mine=1` | Fallback de locales del usuario |
+| GET | `/v1/estado-suscripcion?local_id=…` | Valida suscripción para el local |
+
 
 ## Arquitectura Frontend
 

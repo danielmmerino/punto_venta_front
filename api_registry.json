@@ -1,0 +1,5 @@
+[
+  {"method":"GET","path":"/v1/tenancy/context","name":"Contexto tenancy","module":"tenancy","permission":"tenancy.context.ver"},
+  {"method":"GET","path":"/v1/locales","name":"Listar locales del usuario (mine=1)","module":"locales","permission":"locales.ver"},
+  {"method":"GET","path":"/v1/estado-suscripcion","name":"Estado de suscripción (por empresa/local)","module":"suscripciones","permission":"suscripciones.ver"}
+]
