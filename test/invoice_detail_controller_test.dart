@@ -3,7 +3,6 @@ import 'package:mocktail/mocktail.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:punto_venta_front/features/invoices/controllers/invoice_detail_controller.dart';
-import 'package:punto_venta_front/features/invoices/controllers/invoice_detail_state.dart';
 import 'package:punto_venta_front/features/invoices/data/invoices_repository.dart';
 import 'package:punto_venta_front/features/invoices/data/models/invoice.dart';
 
@@ -28,9 +27,13 @@ Invoice buildInvoice(String status) {
 void main() {
   test('polling stops when invoice becomes autorizada', () async {
     final repo = MockInvoicesRepository();
-    when(() => repo.getInvoice(1))
-        .thenAnswer((_) async => buildInvoice('enviada'))
-        .thenAnswer((_) async => buildInvoice('autorizada'));
+    var callCount = 0;
+    when(() => repo.getInvoice(1)).thenAnswer((_) async {
+      if (callCount++ == 0) {
+        return buildInvoice('enviada');
+      }
+      return buildInvoice('autorizada');
+    });
     final container = ProviderContainer(overrides: [
       invoicesRepositoryProvider.overrideWithValue(repo),
     ]);
