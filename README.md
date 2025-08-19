@@ -97,6 +97,29 @@ Todas las fechas se calculan con zona horaria `America/Guayaquil` para cortes di
 
 La interfaz es responsive y utiliza los mismos componentes en móvil y web.
 
+## Frontend / Cierre de caja
+
+Pantalla para registrar el cierre de caja diaria.
+
+### Flujo
+
+1. Se consulta `GET /v1/caja/estado?local_id=<id>&fecha=<hoy>` para obtener la apertura activa y los totales esperados por método.
+2. El usuario ingresa los conteos por método y el frontend calcula las diferencias en tiempo real (`conteo - esperado`).
+3. Al confirmar se envía `POST /v1/caja/cierre` con los conteos y observaciones. Se incluye el header `Idempotency-Key: CLOSE-<aperturaId>-<uuid>` para hacer la operación idempotente.
+4. La respuesta puede incluir `pdf_url`; si existe se muestra **Descargar PDF**, de lo contrario solo se ofrece **Imprimir** el acta generada.
+
+### Validaciones
+
+- Los conteos deben ser mayores o iguales a cero.
+- Un **409** indica que la caja ya fue cerrada; se muestra el error y se recarga el estado.
+
+### Endpoints usados
+
+| Método | Ruta | Descripción |
+| ------ | ---- | ----------- |
+| GET | `/v1/caja/estado` | Estado/resumen de caja con totales por método |
+| POST | `/v1/caja/cierre` | Cerrar caja y generar acta (PDF opcional) |
+
 ## Frontend / Usuarios y Roles
 
 Módulo administrativo para gestionar usuarios del local actual y sus roles. Disponible solo para perfiles con permisos adecuados.
