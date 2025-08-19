@@ -24,5 +24,10 @@
   {"method":"POST","path":"/v1/productos","name":"Crear producto","module":"productos","permission":"productos.crear"},
   {"method":"PUT","path":"/v1/productos/{id}","name":"Editar producto","module":"productos","permission":"productos.editar"},
   {"method":"DELETE","path":"/v1/productos/{id}","name":"Eliminar producto","module":"productos","permission":"productos.eliminar"},
-  {"method":"POST","path":"/v1/productos/import","name":"Importar productos","module":"productos","permission":"productos.import"}
+  {"method":"POST","path":"/v1/productos/import","name":"Importar productos","module":"productos","permission":"productos.import"},
+  {"method":"GET","path":"/v1/productos/{id}/receta","name":"Obtener receta de producto","module":"productos","permission":"productos.recetas.ver"},
+  {"method":"POST","path":"/v1/productos/{id}/receta","name":"Guardar receta de producto","module":"productos","permission":"productos.recetas.editar"},
+  {"method":"DELETE","path":"/v1/productos/{id}/receta/{insumo_id}","name":"Eliminar línea de receta","module":"productos","permission":"productos.recetas.editar"},
+  {"method":"GET","path":"/v1/productos","name":"Buscar insumos (tipo=insumo)","module":"productos","permission":"productos.ver"},
+  {"method":"GET","path":"/v1/unidades","name":"Listar unidades (vista)","module":"unidades","permission":"unidades.ver"}
 ]
