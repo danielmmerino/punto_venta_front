@@ -30,6 +30,11 @@ class MenuDrawer extends ConsumerWidget {
             onTap: () => context.go('/inventario/movimientos'),
           ),
           ListTile(
+            leading: const Icon(Icons.receipt_long),
+            title: const Text('Tomar pedido'),
+            onTap: () => context.go('/pedidos/nuevo'),
+          ),
+          ListTile(
             leading: const Icon(Icons.shopping_cart),
             title: const Text('Productos'),
             onTap: () => context.go('/productos'),
