@@ -11,6 +11,7 @@ class MenuItem {
     required this.impuestoCodigo,
     required this.impuestoPorcentaje,
     required this.stockLocal,
+    this.urlImagen,
   });
 
   final int id;
@@ -24,6 +25,7 @@ class MenuItem {
   final String impuestoCodigo;
   final double impuestoPorcentaje;
   final double stockLocal;
+  final String? urlImagen;
 
   factory MenuItem.fromJson(Map<String, dynamic> json) => MenuItem(
         id: json['id'] as int,
@@ -39,6 +41,7 @@ class MenuItem {
         impuestoPorcentaje:
             (double.tryParse(json['impuesto_porcentaje'].toString()) ?? 0),
         stockLocal: (double.tryParse(json['stock_local'].toString()) ?? 0),
+        urlImagen: json['url_imagen'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,6 +56,7 @@ class MenuItem {
         'impuesto_codigo': impuestoCodigo,
         'impuesto_porcentaje': impuestoPorcentaje,
         'stock_local': stockLocal,
+        'url_imagen': urlImagen,
       };
 
   MenuItem copyWith({
@@ -67,6 +71,7 @@ class MenuItem {
     String? impuestoCodigo,
     double? impuestoPorcentaje,
     double? stockLocal,
+    String? urlImagen,
   }) {
     return MenuItem(
       id: id ?? this.id,
@@ -80,6 +85,7 @@ class MenuItem {
       impuestoCodigo: impuestoCodigo ?? this.impuestoCodigo,
       impuestoPorcentaje: impuestoPorcentaje ?? this.impuestoPorcentaje,
       stockLocal: stockLocal ?? this.stockLocal,
+      urlImagen: urlImagen ?? this.urlImagen,
     );
   }
 }
