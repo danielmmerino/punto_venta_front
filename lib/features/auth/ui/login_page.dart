@@ -16,8 +16,10 @@ class LoginPage extends HookConsumerWidget {
     final radius = Theme.of(context).extension<AppRadius>()!;
     final colors = Theme.of(context).extension<AppColors>()!;
     final formKey = useMemoized(() => GlobalKey<FormState>());
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
+    final emailController =
+        useTextEditingController(text: 'mesero@demo.com');
+    final passwordController =
+        useTextEditingController(text: 'VendePro#2025');
     final obscure = useState(true);
     final state = ref.watch(loginControllerProvider);
 
