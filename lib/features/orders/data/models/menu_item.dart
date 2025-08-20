@@ -31,7 +31,8 @@ class MenuItem {
         nombre: json['nombre'] as String,
         descripcion: json['descripcion'] as String?,
         tipo: json['tipo'] as String,
-        precioVenta: (json['precio_venta'] as num).toDouble(),
+        precioVenta:
+            (double.tryParse(json['precio_venta'].toString()) ?? 0),
         impuestoId: json['impuesto_id'] as int,
         categoriaNombre: json['categoria_nombre'] as String,
         impuestoCodigo: json['impuesto_codigo'] as String,
