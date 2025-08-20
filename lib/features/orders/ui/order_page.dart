@@ -13,7 +13,8 @@ class OrderPage extends HookConsumerWidget {
     final state = ref.watch(orderControllerProvider);
 
     useEffect(() {
-      ref.read(orderControllerProvider.notifier).loadMenu();
+      Future(() =>
+          ref.read(orderControllerProvider.notifier).loadMenu());
       return null;
     }, const []);
 
