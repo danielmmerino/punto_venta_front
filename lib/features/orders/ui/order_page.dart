@@ -47,12 +47,24 @@ class OrderPage extends HookConsumerWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(item.nombre,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium),
+                                if (item.urlImagen != null) ...[
+                                  Expanded(
+                                    child: Image.network(
+                                      item.urlImagen!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                ],
+                                Text(
+                                  item.nombre,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
                                 const Spacer(),
-                                Text('\$${item.precioVenta.toStringAsFixed(2)}'),
+                                Text(
+                                  '\$${item.precioVenta.toStringAsFixed(2)}',
+                                ),
                               ],
                             ),
                           ),
