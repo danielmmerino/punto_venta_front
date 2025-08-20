@@ -37,36 +37,53 @@ class OrderPage extends HookConsumerWidget {
                     itemCount: state.menu.length,
                     itemBuilder: (context, index) {
                       final item = state.menu[index];
+                      final line = state.items
+                          .where((e) => e.item.id == item.id);
+                      final quantity =
+                          line.isNotEmpty ? line.first.quantity : 0;
                       return Card(
-                        child: InkWell(
-                          onTap: () => ref
-                              .read(orderControllerProvider.notifier)
-                              .add(item),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (item.urlImagen != null) ...[
-                                  Expanded(
-                                    child: Image.network(
-                                      item.urlImagen!,
-                                      fit: BoxFit.cover,
-                                    ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (item.urlImagen != null) ...[
+                                Expanded(
+                                  child: Image.network(
+                                    item.urlImagen!,
+                                    fit: BoxFit.cover,
                                   ),
-                                  const SizedBox(height: 8),
-                                ],
-                                Text(
-                                  item.nombre,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
                                 ),
-                                const Spacer(),
-                                Text(
-                                  '\$${item.precioVenta.toStringAsFixed(2)}',
-                                ),
+                                const SizedBox(height: 8),
                               ],
-                            ),
+                              Text(
+                                item.nombre,
+                                style:
+                                    Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Text(
+                                    '\$${item.precioVenta.toStringAsFixed(2)}',
+                                  ),
+                                  const Spacer(),
+                                  IconButton(
+                                    icon: const Icon(Icons.remove),
+                                    onPressed: () => ref
+                                        .read(orderControllerProvider.notifier)
+                                        .remove(item),
+                                  ),
+                                  Text(quantity.toString()),
+                                  IconButton(
+                                    icon: const Icon(Icons.add),
+                                    onPressed: () => ref
+                                        .read(orderControllerProvider.notifier)
+                                        .add(item),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       );
